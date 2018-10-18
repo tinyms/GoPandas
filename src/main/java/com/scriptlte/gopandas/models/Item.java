@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.scriptlte.gopandas;
+package com.scriptlte.gopandas.models;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,30 +22,24 @@ import javax.persistence.Id;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 /**
- * Domain object for an employee.
+ * Domain object for an item managed by the company.
  *
  * @author Greg Turnquist
+ * @author Oliver Gierke
  */
-@Data
 @Entity
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class Employee {
+@Data
+public class Item {
 
 	private @Id @GeneratedValue Long id;
-	private final String firstName, lastName, title;
+	private final String description;
 
-	Employee() {
-		this.firstName = null;
-		this.lastName = null;
-		this.title = null;
+	Item() {
+		this.description = null;
 	}
 
-	public Employee(String firstName, String lastName, String title) {
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.title = title;
+	public Item(String description) {
+		this.description = description;
 	}
 }

@@ -13,33 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.scriptlte.gopandas;
+package com.scriptlte.gopandas.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import io.swagger.annotations.Api;
+import org.springframework.data.repository.CrudRepository;
 
 /**
- * Domain object for an item managed by the company.
+ * This repository has no method-level security annotations. That's because it's secured at the URL level inside
  *
  * @author Greg Turnquist
- * @author Oliver Gierke
+ *
  */
-@Entity
-@Data
-public class Item {
 
-	private @Id @GeneratedValue Long id;
-	private final String description;
-
-	Item() {
-		this.description = null;
-	}
-
-	public Item(String description) {
-		this.description = description;
-	}
-}
+public interface EmployeeRepository extends CrudRepository<Employee, Long> {}

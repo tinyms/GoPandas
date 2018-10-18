@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2018 the original author or authors.
+ * Copyright 2017-2018 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,13 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.scriptlte.gopandas;
+package com.scriptlte.gopandas.models;
+
+import java.util.List;
+
+import javax.naming.Name;
 
 import org.springframework.data.repository.CrudRepository;
 
 /**
- * This repository has no method-level security annotations. That's because it's secured at the URL level inside
+ * Repository interface to manage {@link Person} instances.
  *
- * @author Greg Turnquist
+ * @author Mark Paluch
  */
-public interface EmployeeRepository extends CrudRepository<Employee, Long> {}
+public interface PersonRepository extends CrudRepository<Person, Name> {
+
+	/**
+	 * Find by UserId.
+	 *
+	 * @param uid
+	 * @return
+	 */
+	List<Person> findByUid(String uid);
+
+	/**
+	 * Prefix search on {@link Person#getLastname()}.
+	 *
+	 * @param prefix
+	 * @return
+	 */
+	List<Person> findByLastnameStartsWith(String prefix);
+}

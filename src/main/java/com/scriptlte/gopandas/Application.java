@@ -17,6 +17,10 @@ package com.scriptlte.gopandas;
 
 import javax.annotation.PostConstruct;
 
+import com.scriptlte.gopandas.models.Employee;
+import com.scriptlte.gopandas.models.EmployeeRepository;
+import com.scriptlte.gopandas.models.Item;
+import com.scriptlte.gopandas.models.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -33,18 +37,22 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.User.UserBuilder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
  * This example shows various ways to secure Spring Data REST applications using Spring Security
  *
  * @author Greg Turnquist
  */
+
 @EnableAutoConfiguration
 @SpringBootApplication
 public class Application {
 
-	@Autowired ItemRepository itemRepository;
-	@Autowired EmployeeRepository employeeRepository;
+	@Autowired
+    ItemRepository itemRepository;
+	@Autowired
+    EmployeeRepository employeeRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class);

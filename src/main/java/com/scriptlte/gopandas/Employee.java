@@ -31,7 +31,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  */
 @Data
 @Entity
-@RequiredArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Employee {
 
@@ -42,5 +41,11 @@ public class Employee {
 		this.firstName = null;
 		this.lastName = null;
 		this.title = null;
+	}
+
+	public Employee(String firstName, String lastName, String title) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.title = title;
 	}
 }

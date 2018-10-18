@@ -19,6 +19,7 @@ import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -38,6 +39,7 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
  *
  * @author Greg Turnquist
  */
+@EnableAutoConfiguration
 @SpringBootApplication
 public class Application {
 
@@ -114,6 +116,7 @@ public class Application {
 		protected void configure(HttpSecurity http) throws Exception {
 
 			http.httpBasic().and().authorizeRequests().//
+                    antMatchers(HttpMethod.GET, "/employees").hasRole("ADMIN").//
 					antMatchers(HttpMethod.POST, "/employees").hasRole("ADMIN").//
 					antMatchers(HttpMethod.PUT, "/employees/**").hasRole("ADMIN").//
 					antMatchers(HttpMethod.PATCH, "/employees/**").hasRole("ADMIN").and().//

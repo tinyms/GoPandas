@@ -61,7 +61,7 @@ import java.util.*;
  */
 @Configuration
 @ComponentScan(
-        basePackages = {"br.com.trustsystems.elfinder"},
+        basePackages = {"com.scriptlte.gopandas.elfinder"},
         excludeFilters = {@Filter(type = FilterType.ANNOTATION, value = Configuration.class)}
 )
 public class ElfinderRootConfig {
@@ -69,7 +69,7 @@ public class ElfinderRootConfig {
     @Bean(name = "commandFactory")
     public CommandFactory getCommandFactory() {
         CommandFactory commandFactory = new CommandFactory();
-        commandFactory.setClassNamePattern("br.com.trustsystems.elfinder.command.%sCommand");
+        commandFactory.setClassNamePattern("com.scriptlte.gopandas.elfinder.command.%sCommand");
         return commandFactory;
     }
 

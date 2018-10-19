@@ -1,4 +1,4 @@
-package com.scriptlte.gopandas;
+package com.scriptlte.gopandas.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

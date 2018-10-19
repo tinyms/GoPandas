@@ -56,13 +56,10 @@ public class CommandFactory implements ElfinderCommandFactory {
         ElfinderCommand command = null;
 
         try {
-            command = cache.getValue(commandName, new Callable<ElfinderCommand>() {
-                @Override
-                public ElfinderCommand call() throws Exception {
-                    logger.debug(String.format("trying recovery command!: %s", commandName));
-                    String className = String.format(getClassNamePattern(), commandName.substring(0, 1).toUpperCase() + commandName.substring(1));
-                    return (ElfinderCommand) Class.forName(className).newInstance();
-                }
+            command = cache.getValue(commandName, () -> {
+                logger.debug(String.format("trying recovery command!: %s", commandName));
+                String className = String.format(getClassNamePattern(), commandName.substring(0, 1).toUpperCase() + commandName.substring(1));
+                return (ElfinderCommand) Class.forName(className).newInstance();
             });
             logger.debug(String.format("command found!: %s", commandName));
         } catch (InterruptedException | ExecutionException e) {

@@ -1168,7 +1168,7 @@ div.elfinder-cwd-wrapper-list .ui-icon-grip-dotted-vertical {
  * Toolbar
  */
 .elfinder-toolbar {
-  background: #1E88E5;
+  background: #F0F0F0;
   -webkit-border-radius: 0;
   border-radius: 0;
   border: 0;
@@ -1176,7 +1176,7 @@ div.elfinder-cwd-wrapper-list .ui-icon-grip-dotted-vertical {
 }
 .elfinder-toolbar .elfinder-button-icon {
   font-size: 20px;
-  color: #fff;
+  color: #333333;
   margin-top: -2px;
 }
 .elfinder-buttonset {
@@ -1224,7 +1224,7 @@ div.elfinder-cwd-wrapper-list .ui-icon-grip-dotted-vertical {
   overflow: hidden;
 }
 .elfinder .elfinder-button-search input {
-  background: rgba(16, 96, 167, 0.79);
+  background: #999;
   -webkit-border-radius: 2px;
   border-radius: 2px;
   -webkit-box-sizing: content-box;
@@ -1366,11 +1366,11 @@ div.elfinder-cwd-wrapper-list .ui-icon-grip-dotted-vertical {
  * Status Bar
  */
 .elfinder .elfinder-statusbar {
-  background: #2196F3;
+  background: #F0F0F0;
   -webkit-border-radius: 0;
   border-radius: 0;
   border: 0;
-  color: #fff;
+  color: #555;
 }
 .elfinder-path,
 .elfinder-stat-size {

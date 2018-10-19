@@ -15,8 +15,6 @@
  */
 package com.scriptlte.gopandas;
 
-import javax.annotation.PostConstruct;
-
 import com.scriptlte.gopandas.models.Employee;
 import com.scriptlte.gopandas.models.EmployeeRepository;
 import com.scriptlte.gopandas.models.Item;
@@ -37,7 +35,8 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.User.UserBuilder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+import javax.annotation.PostConstruct;
 
 /**
  * This example shows various ways to secure Spring Data REST applications using Spring Security
@@ -55,7 +54,7 @@ public class Application {
     EmployeeRepository employeeRepository;
 
 	public static void main(String[] args) {
-		SpringApplication.run(Application.class);
+	    SpringApplication.run(Application.class);
 	}
 
 	/**

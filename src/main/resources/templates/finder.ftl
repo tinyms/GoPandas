@@ -58,34 +58,7 @@
             </button>
             <div class="collapse navbar-collapse pull-right" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            组织
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">组织</a>
-                            <a class="dropdown-item" href="#">部门</a>
-                            <a class="dropdown-item" href="#">员工</a>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            权限
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">用户</a>
-                            <a class="dropdown-item" href="#">组</a>
-                            <a class="dropdown-item" href="#">权限</a>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">调度</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">流程</a>
-                    </li>
+                    ${_NavBar}
                 </ul>
 
             </div>

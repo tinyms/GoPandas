@@ -33,16 +33,72 @@
 
     <!-- elFinder translation (OPTIONAL) -->
     <script type="text/javascript" src="/elfinder/js/i18n/elfinder.zh_CN.js"></script>
-
+    <style type="text/css">
+        .elfinder-button-icon-sl_create_menu:before {
+            content: '\e81b';
+        }
+        .elfinder-button-icon-sl_create_scheduled:before {
+            content: '\e82f';
+        }
+    </style>
     <!-- elFinder initialization (REQUIRED) -->
     <script type="text/javascript" charset="utf-8">
         // Documentation for client options:
         // https://github.com/Studio-42/elFinder/wiki/Client-configuration-options
         $(document).ready(function () {
+            elFinder.prototype.i18.zh_CN.messages['cmd' + 'sl_create_menu'] = '创建菜单';
+            elFinder.prototype._options.commands.push('sl_create_menu');
+            elFinder.prototype.commands.sl_create_menu = function () {
+                this.exec = function (hashes) {
+                    //do whatever
+                    console.log(1, hashes);
+                    var files = this.files(hashes);
+                    if (files !== null && files.length > 0) {
+                        var file = files[0];
+                        //判断后缀
+                        var filename = file.name;
+                        var strs = filename.split(".");
+                        console.log(files, strs);
+                    }
+                };
+                this.getstate = function (sel) {
+                    //return 0 to enable, -1 to disable icon access
+                    console.log(2, sel);
+                    return 0;
+                }
+            };
+            elFinder.prototype.i18.zh_CN.messages['cmd' + 'sl_create_scheduled'] = '创建调度';
+            elFinder.prototype._options.commands.push('sl_create_scheduled');
+            elFinder.prototype.commands.sl_create_scheduled = function () {
+                this.exec = function (hashes) {
+                    //do whatever
+                    console.log(hashes);
+                };
+                this.getstate = function (sel) {
+                    //return 0 to enable, -1 to disable icon access
+                    console.log(sel);
+                    return 0;
+                }
+            };
+            var elf_commands = [
+                'sl_create_menu', 'sl_create_scheduled', 'open', 'reload', 'home', 'up', 'back', 'forward', 'getfile', 'quicklook',
+                'download', 'rm', 'duplicate', 'rename', 'mkdir', 'mkfile', 'upload', 'copy',
+                'cut', 'paste', 'edit', 'extract', 'archive', 'search', 'info', 'view', 'help', 'resize', 'sort', 'netmount'
+            ];
+            var elf_contextmenu = {
+                // navbarfolder menu
+                navbar: ['open', '|', 'copy', 'cut', 'paste', 'duplicate', '|', 'rm', '|', 'info'],
+                // current directory menu
+                cwd: ['reload', 'back', '|', 'upload', 'mkdir', 'mkfile', 'paste', '|', 'sort', '|', 'info'],
+                // current directory file menu
+                files: ['sl_create_menu', 'sl_create_scheduled', '|', 'getfile', '|', 'quicklook', '|', 'download', '|', 'copy', 'cut', 'paste', 'duplicate', '|', 'rm', '|', 'edit', 'rename', 'resize', '|', 'archive', 'extract', '|', 'info']
+            };
             $('#elfinder').elfinder({
                 cssAutoLoad: false,
+                commands: elf_commands,
+                contextmenu: elf_contextmenu,
                 url: '/connector',  // connector URL (REQUIRED)
-                lang: 'zh_CN'                    // language (OPTIONAL)
+                lang: 'zh_CN'// language (OPTIONAL)
             });
         });
     </script>
@@ -58,7 +114,7 @@
             </button>
             <div class="collapse navbar-collapse pull-right" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                    ${_NavBar}
+                ${_NavBar}
                 </ul>
 
             </div>

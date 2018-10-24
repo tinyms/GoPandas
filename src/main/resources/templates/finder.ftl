@@ -45,28 +45,37 @@
     <script type="text/javascript" charset="utf-8">
         // Documentation for client options:
         // https://github.com/Studio-42/elFinder/wiki/Client-configuration-options
+        var slElFinder = null;
         $(document).ready(function () {
             elFinder.prototype.i18.zh_CN.messages['cmd' + 'sl_create_menu'] = '创建菜单';
             elFinder.prototype._options.commands.push('sl_create_menu');
             elFinder.prototype.commands.sl_create_menu = function () {
+                var that = this;
                 this.exec = function (hashes) {
                     //do whatever
                     console.log(1, hashes);
                     var files = this.files(hashes);
-                    if (files !== null && files.length > 0) {
+                    if (files !== null && files.length === 1) {
                         var file = files[0];
                         //判断后缀
                         var filename = file.name;
                         var strs = filename.split(".");
-                        console.log(files, strs);
+                        console.log(files, strs, slElFinder.dialog);
+                        var bbb = $('#elfinder').elfinder('dialog');
+                        console.log(bbb);
+                        slElFinder.dialog('aaa', {});
                     }
                 };
                 this.getstate = function (sel) {
                     //return 0 to enable, -1 to disable icon access
-                    console.log(2, sel);
-                    return 0;
+                    var files = this.files(sel);
+                    if (files.length === 1) {
+                        return 0;
+                    }
+                    return -1;
                 }
             };
+            var mime_types = ['.bat', '.sh', '.exe', '.jar', '.js', '.py', '.doc'];
             elFinder.prototype.i18.zh_CN.messages['cmd' + 'sl_create_scheduled'] = '创建调度';
             elFinder.prototype._options.commands.push('sl_create_scheduled');
             elFinder.prototype.commands.sl_create_scheduled = function () {
@@ -76,8 +85,16 @@
                 };
                 this.getstate = function (sel) {
                     //return 0 to enable, -1 to disable icon access
-                    console.log(sel);
-                    return 0;
+                    var files = this.files(sel);
+                    if (files.length === 1) {
+                        var name = files[0].name;
+                        for (var k = 0; k < mime_types.length; k++) {
+                            if (name.endsWith(mime_types[k])) {
+                                return 0;
+                            }
+                        }
+                    }
+                    return -1;
                 }
             };
             var elf_commands = [
@@ -93,7 +110,7 @@
                 // current directory file menu
                 files: ['sl_create_menu', 'sl_create_scheduled', '|', 'getfile', '|', 'quicklook', '|', 'download', '|', 'copy', 'cut', 'paste', 'duplicate', '|', 'rm', '|', 'edit', 'rename', 'resize', '|', 'archive', 'extract', '|', 'info']
             };
-            $('#elfinder').elfinder({
+            slElFinder = $('#elfinder').elfinder({
                 cssAutoLoad: false,
                 commands: elf_commands,
                 contextmenu: elf_contextmenu,

@@ -1,0 +1,4 @@
+spring:
+  profiles:
+    include: base #base 全局统一配置
+    active: dev #dev开发环境 pro生产环境

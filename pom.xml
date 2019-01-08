@@ -4,7 +4,7 @@
     <groupId>com.scriptlte.gopandas</groupId>
     <artifactId>GoPandas</artifactId>
     <version>1.0</version>
-    <packaging>pom</packaging>
+    <packaging>war</packaging>
     <name>GoPandas</name>
 
     <parent>
@@ -89,6 +89,14 @@
             <artifactId>unboundid-ldapsdk</artifactId>
             <scope>runtime</scope>
         </dependency>
+
+        <!--&lt;!&ndash; Spring boot 热部署 : 此热部署会遇到 java.lang.ClassCastException 异常 &ndash;&gt;-->
+        <!--&lt;!&ndash; optional=true,依赖不会传递，该项目依赖devtools；之后依赖myboot项目的项目如果想要使用devtools，需要重新引入 &ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.boot</groupId>-->
+            <!--<artifactId>spring-boot-devtools</artifactId>-->
+            <!--<optional>true</optional>-->
+        <!--</dependency>-->
 
         <!--Swagger start-->
         <dependency>
@@ -208,6 +216,15 @@
             <artifactId>h2</artifactId>
             <version>1.4.197</version>
         </dependency>
+
+
+        <!--Hutools 工具类库-->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>4.4.0</version>
+        </dependency>
+        <!--Hutools end-->
 
     </dependencies>
 

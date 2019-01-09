@@ -53,7 +53,7 @@ public class ElfinderConfigurationWrapper {
     private static final Logger log = LoggerFactory.getLogger(ElfinderConfigurationWrapper.class);
 
     public static final String XML_FILE = "elfinder-configuration.xml";
-    public static final String CONF_DIR = System.getProperty("user.home") + File.separator + "elfinder" + File.separator;
+    public static final String CONF_DIR = ElfinderConfigurationWrapper.class.getResource("/").getPath();
     public static final String XML_PATH = CONF_DIR + XML_FILE;
 
 //    public static final String XML_PATH = System.getenv("ELFINDER_CONFIGURATION_XML");

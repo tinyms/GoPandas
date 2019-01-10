@@ -2,11 +2,9 @@ package com.scriptlte.gopandas.security.pojo;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Data
@@ -19,5 +17,7 @@ public class OrgRole implements Serializable {
     private Long id;
     @Column(unique = true)
     private String roleName;
+    @Transient
+    private List<OrgGrant> grants;
 
 }

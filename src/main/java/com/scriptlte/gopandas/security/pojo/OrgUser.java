@@ -2,11 +2,13 @@ package com.scriptlte.gopandas.security.pojo;
 
 import com.scriptlte.gopandas.security.config.SecurityConstant;
 import lombok.Data;
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.Constraint;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -25,8 +27,10 @@ public class OrgUser implements UserDetails, Serializable {
     private String username;
     private String password;
     private String status;
-    @ManyToMany(targetEntity = OrgRole.class,fetch = FetchType.EAGER)
+    @Transient
     private List<OrgRole> roles;
+    @Transient
+//    private
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

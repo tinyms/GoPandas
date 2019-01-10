@@ -1,15 +1,17 @@
 package com.scriptlte.gopandas.security.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.scriptlte.gopandas.security.IpSecurity.IpAuthenticationProcessingFilter;
+import com.scriptlte.gopandas.security.IpSecurity.IpAuthenticationProvider;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 
 import javax.annotation.Resource;
 
@@ -22,6 +24,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.authenticationProvider(new IpAuthenticationProvider());
         auth.userDetailsService(userDetailsService).passwordEncoder(NoOpPasswordEncoder.getInstance());
     }
 
@@ -29,8 +32,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
+                //这几个路径 不需要权限
+                .antMatchers("/iplogin","/login").permitAll()
+                //其他url需要登陆权限
                 .anyRequest().authenticated()
                 .and()
-            .formLogin();
+            //配置form表单方式登陆点
+            .formLogin()
+                //如果出现权限不够，或者未登录访问的情况，会跳转到该url
+                .loginPage("/login");
+        //把自定义的过滤器加到SpringSecurity的过滤器之前
+//        http.addFilterBefore(ipAuthenticationProcessingFilter(authenticationManager()), UsernamePasswordAuthenticationFilter.class);
+    }
+
+    IpAuthenticationProcessingFilter ipAuthenticationProcessingFilter(AuthenticationManager authenticationManager){
+
+        IpAuthenticationProcessingFilter ipAuthenticationProcessingFilter = new IpAuthenticationProcessingFilter("/iplogin",null);
+        //将ProviderManager填充进去
+        ipAuthenticationProcessingFilter.setAuthenticationManager(authenticationManager);
+        ipAuthenticationProcessingFilter.setAuthenticationFailureHandler(new SimpleUrlAuthenticationFailureHandler("/iplogin/error"));
+        return ipAuthenticationProcessingFilter;
     }
 }

@@ -1,11 +1,8 @@
 package com.scriptlte.gopandas.security.service;
 
 import com.scriptlte.gopandas.security.dao.OrgRoleRepository;
-import com.scriptlte.gopandas.security.dao.OrgUserRepository;
 import com.scriptlte.gopandas.security.pojo.OrgRole;
-import com.scriptlte.gopandas.security.pojo.OrgUser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 

@@ -15,37 +15,24 @@
  */
 package com.scriptlte.gopandas;
 
-import com.scriptlte.gopandas.models.Employee;
 import com.scriptlte.gopandas.models.EmployeeRepository;
-import com.scriptlte.gopandas.models.Item;
 import com.scriptlte.gopandas.models.ItemRepository;
 import com.scriptlte.gopandas.security.config.SecurityConstant;
-import com.scriptlte.gopandas.security.dao.OrgRoleRepository;
-import com.scriptlte.gopandas.security.dao.OrgUserRepository;
-import com.scriptlte.gopandas.security.pojo.OrgRole;
-import com.scriptlte.gopandas.security.pojo.OrgUser;
+import com.scriptlte.gopandas.security.dao.role.OrgRoleRepository;
+import com.scriptlte.gopandas.security.dao.user.OrgUserRepository;
+import com.scriptlte.gopandas.security.pojo.role.OrgRole;
+import com.scriptlte.gopandas.security.pojo.user.OrgUser;
 import com.scriptlte.gopandas.security.service.OrgRoleService;
 import com.scriptlte.gopandas.security.service.OrgUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.User.UserBuilder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * This example shows various ways to secure Spring Data REST applications using Spring Security
@@ -102,18 +89,19 @@ public class Application {
 		userAdmin.setStatus(SecurityConstant.USER_STATUS_ENABLE);
 		orgUserService.saveOrUpdate(userAdmin);
 		OrgUser user = orgUserService.getUserByUserName("zhangsan");
-		if (user == null)
+		if (user == null){
 			user = new OrgUser();
+		}
 		user.setUsername("zhangsan");
 		user.setPassword("123");
 		user.setStatus(SecurityConstant.USER_STATUS_ENABLE);
 		orgUserService.saveOrUpdate(user);
-		OrgRole role = orgRoleService.getRoleByName("角色名");
+		OrgRole role = orgRoleService.getRoleByName("ADMIN");
 		if (role == null){
 			role = new OrgRole();
 		}
-		List<OrgRole> roles = new ArrayList<>();
-		role.setRoleName("角色名");
+		Set<OrgRole> roles = new HashSet<>();
+		role.setRoleName("ADMIN");
 		orgRoleService.save(role);
 		roles.add(role);
 		user.setRoles(roles);

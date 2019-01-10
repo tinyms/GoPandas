@@ -2,6 +2,7 @@ package com.scriptlte.gopandas.security.config;
 
 import com.scriptlte.gopandas.security.IpSecurity.IpAuthenticationProcessingFilter;
 import com.scriptlte.gopandas.security.IpSecurity.IpAuthenticationProvider;
+import com.scriptlte.gopandas.security.config.pwencoder.Md5PasswordEncoder;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -24,8 +25,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(new IpAuthenticationProvider());
-        auth.userDetailsService(userDetailsService).passwordEncoder(NoOpPasswordEncoder.getInstance());
+//        auth.authenticationProvider(new IpAuthenticationProvider());
+        auth.userDetailsService(userDetailsService).passwordEncoder(Md5PasswordEncoder.getInstance());
     }
 
     @Override

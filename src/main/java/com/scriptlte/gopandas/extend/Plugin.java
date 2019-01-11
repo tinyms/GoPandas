@@ -49,7 +49,7 @@ public class Plugin {
      * @param name 扩展点名称
      * @param args 动作需要的参数
      */
-    public static void do_action(String name, Object... args) {
+    public static void do_actions(String name, Object... args) {
         if (ACTIONS.containsKey(name)) {
             List<Item> metas = ACTIONS.get(name);
             sort(metas);
@@ -149,7 +149,7 @@ public class Plugin {
             try {
                 StringBuilder sb = new StringBuilder();
                 sb.append("function add_action(name, clsName, priority){gp_plugin_class.add_action(name, clsName, priority);}");
-                sb.append("function add_filter(name, clsName, priority){gp_plugin_class.add_action(name, clsName, priority);}");
+                sb.append("function add_filter(name, clsName, priority){gp_plugin_class.add_filter(name, clsName, priority);}");
                 String s = FileUtils.readFileToString(f, "utf-8");
                 sb.append(s);
                 try {

@@ -13,7 +13,7 @@
 
 1. 执行动作 
 
-    `` Plugin.do_action("gp_upload_completed", file, user, ...); ``
+    `` Plugin.do_actions("gp_upload_completed", file, user, ...); ``
 
 2. 执行过滤
 

@@ -20,8 +20,8 @@ public class OrgUser implements UserDetails, Serializable {
     private static final long serialVersionUID = 6427512514997356L;
 
     @Id
-    @GeneratedValue(generator = "jpa-uuid")
-    @GenericGenerator(name = "jpa-uuid",strategy = "uuid")
+    @GeneratedValue(generator = "jpa-uuid-user")
+    @GenericGenerator(name = "jpa-uuid-user",strategy = "uuid")
     @Column(length = 32)
     private String id;
     private String employeeId;

@@ -1,6 +1,7 @@
 package com.scriptlte.gopandas.security.pojo.grant;
 
 import lombok.Data;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.Column;
@@ -13,7 +14,8 @@ import java.util.Objects;
 @Data
 public class OrgGrant implements GrantedAuthority {
     @Id
-    @GeneratedValue(generator = "jpa-uuid")
+    @GeneratedValue(generator = "jpa-uuid-grant")
+    @GenericGenerator(name = "jpa-uuid-grant",strategy = "uuid")
     @Column(length = 32)
     private String id;
     @Column(unique = true)

@@ -3,6 +3,7 @@ package com.scriptlte.gopandas.security.pojo.role;
 import com.scriptlte.gopandas.security.config.SecurityConstant;
 import com.scriptlte.gopandas.security.pojo.grant.OrgGrant;
 import lombok.Data;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
@@ -21,7 +22,8 @@ public class OrgRole implements Serializable, GrantedAuthority {
     private static final long serialVersionUID = 4259151026867212382L;
 
     @Id
-    @GeneratedValue(generator = "jpa-uuid")
+    @GeneratedValue(generator = "jpa-uuid-role")
+    @GenericGenerator(name = "jpa-uuid-role",strategy = "uuid")
     @Column(length = 32)
     private String id;
     @Column(unique = true)

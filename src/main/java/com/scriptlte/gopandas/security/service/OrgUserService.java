@@ -50,6 +50,7 @@ public class OrgUserService implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException(String.format("用户不存在！(用户名:[%s])", username));
         }
+        /*注意： 以下几个analyze方法的顺序不可以改变！*/
         //分析用户关联的员工
         OrgEmployee employee = analyzeEmployee(user);
         //分析员工所对应的部门
@@ -71,6 +72,11 @@ public class OrgUserService implements UserDetailsService {
     }
 
 
+    /**
+     * 分析该用户对应的雇员对象
+     * @param user 登录用户
+     * @return
+     */
     public OrgEmployee analyzeEmployee(OrgUser user) {
         if (user == null) {
             return null;
@@ -85,15 +91,20 @@ public class OrgUserService implements UserDetailsService {
         return employee;
     }
 
+    /**
+     *  根据员工分析该员工所属的部门对象(在实体结构设计上是允许这个员工没有部门的,如果要限制 在员工操作层进行限制即可)
+     * @param employee 员工对象
+     * @return
+     */
     public OrgDept analyzeDept(OrgEmployee employee) {
         if (employee == null) {
             return null;
         }
         OrgDept dept = null;
-        String deptCode = employee.getDeptCode();
+        String deptId = employee.getDeptId();
         //获取员工所关联的部门
-        if (StringUtils.isNotBlank(deptCode)){
-            dept = orgDeptService.getDeptByDeptCode(deptCode);
+        if (StringUtils.isNotBlank(deptId)){
+            dept = orgDeptService.getDeptById(deptId);
             employee.setOrgDept(dept);
         }
         return dept;
@@ -109,7 +120,7 @@ public class OrgUserService implements UserDetailsService {
      */
     public Set<OrgRole> analyzeRoles(OrgUser user, OrgEmployee employee, OrgDept dept) {
         Set<OrgRole> orgRoles = new HashSet<>();
-        List<String> ids = packageIds(user, employee, dept, null, "角色分析");
+        List<String> ids = packageIds(user, employee, dept, null, "用户角色分析");
         //根据ids去 角色关联表中查询所有的角色对象
         if (!ids.isEmpty()) {
             //获得所有的role的Id
@@ -129,7 +140,7 @@ public class OrgUserService implements UserDetailsService {
     public Set<OrgGrant> analyzeGrants(OrgUser user, OrgEmployee employee, OrgDept dept, Set<OrgRole> roles) {
         //如果用户未绑定员工则为null
         Set<OrgGrant> orgGrants = new HashSet<>();
-        List<String> ids = packageIds(user,employee ,dept , roles, "权限分析");
+        List<String> ids = packageIds(user,employee ,dept , roles, "用户权限分析");
         //如果ids不为空,查询出所有对应的权限对象
         if (!ids.isEmpty()){
             List<String> grantIds = rel_GrantRepository.queryGrantIdsByRelObjectIds(ids);
@@ -139,25 +150,35 @@ public class OrgUserService implements UserDetailsService {
         return orgGrants;
     }
 
-    public List<String> packageIds(OrgUser user, OrgEmployee employee, OrgDept dept, Set<OrgRole> roles, String type){
+    /**
+     * 根据传入的对象将所有对象的Id放入List中(用于查询一些关联表)
+     * 不需要封装Id的对象传入null即可
+     * @param user  用户对象
+     * @param employee 雇员对象
+     * @param dept 部门对象
+     * @param roles 角色对象列表
+     * @param type 在执行时检测到传入为null对象时会输出debug级别日志，该值可以控制输出语句中代表功能名称的内容
+     * @return 封装了所有非null对象的Id的列表
+     */
+    public static List<String> packageIds(OrgUser user, OrgEmployee employee, OrgDept dept, Set<OrgRole> roles, String type){
         List<String> ids = new ArrayList<>();
             ids.add(user.getId());
             if (employee != null) {
                 ids.add(employee.getId());
             } else {
-                LogUtil.printDebug(String.format("用户%s(用户名 [%s]): employee对象为null...", type, user.getUsername()), log);
+                LogUtil.printDebug(String.format("%s(用户名 [%s]): employee对象为null...", type, user.getUsername()), log);
             }
             if (dept != null) {
                 ids.add(dept.getId());
             } else {
-                LogUtil.printDebug(String.format("用户%s(用户名 [%s]): dept对象为null...", type, user.getUsername()), log);
+                LogUtil.printDebug(String.format("%s(用户名 [%s]): dept对象为null...", type, user.getUsername()), log);
             }
             if (roles != null) {
                 for (OrgRole role : roles) {
                     ids.add(role.getId());
                 }
             } else {
-                LogUtil.printDebug(String.format("用户%s(用户名 [%s]): role集合为null...", type, user.getUsername()), log);
+                LogUtil.printDebug(String.format("%s(用户名 [%s]): role集合为null...", type, user.getUsername()), log);
             }
         return ids;
     }

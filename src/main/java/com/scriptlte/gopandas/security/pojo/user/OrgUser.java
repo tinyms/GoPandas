@@ -42,12 +42,8 @@ public class OrgUser implements UserDetails, Serializable {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<GrantedAuthority> auths = new HashSet<>();
-        for (OrgRole role : roles){
-            auths.add(role);
-        }
-        for (OrgGrant grant : grants){
-            auths.add(grant);
-        }
+        auths.addAll(roles);
+        auths.addAll(grants);
         return auths;
     }
 

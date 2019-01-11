@@ -17,6 +17,7 @@ public class OrgRel_X_Grant implements Serializable {
     @Id
     @GeneratedValue(generator = "jpa-uuid-rel-x-grant")
     @GenericGenerator(name = "jpa-uuid-rel-x-grant",strategy = "uuid")
+    @Column(length = 32)
     private String id;
     @Column(nullable = false)
     private String relObjectId;

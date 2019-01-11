@@ -21,8 +21,9 @@ public class OrgDept {
     private String deptCode;
     @Column(nullable = false)
     private String deptName;
-    private String parentCode;
+    @Column(nullable = false)
     private String deptType;
+    private String deptId;
     @Transient
     private List<OrgGrant> grants;
     @Transient

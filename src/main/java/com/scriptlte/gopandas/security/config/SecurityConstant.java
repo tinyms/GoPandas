@@ -5,7 +5,14 @@ package com.scriptlte.gopandas.security.config;
  */
 public class SecurityConstant {
 
-    /*用户对象相关常量*/
+    /**
+     * 所有角色的名字在内存中最终都要加上这个前缀
+     */
+    public static final String ROLE_PREFIX = "ROLE_";
+
+
+
+    /*用户对象相关常量 start -------*/
 
     /**
      * 用户可用
@@ -16,12 +23,23 @@ public class SecurityConstant {
      */
     public static final String USER_STATUS_DISABLE = "-1";
 
-    /*用户常量*/
+    /*用户对象相关常量 end -------*/
+
+
+
+    /*部门对象相关常量 start -------*/
 
     /**
-     * 所有角色的名字在内存中最终都要加上这个前缀
+     * 部门类型 ： 公司
      */
-    public static final String ROLE_PREFIX = "ROLE_";
+    public static final String DEPT_TYPE_COMPANY = "-1";
+    /**
+     * 部门类型 ： 部门
+     */
+    public static final String DEPT_TYPE_DEPARTMENT = "0";
+
+    /*部门对象相关常量 end -------*/
+
 
 
     /*关联关系定义常量 start-------*/

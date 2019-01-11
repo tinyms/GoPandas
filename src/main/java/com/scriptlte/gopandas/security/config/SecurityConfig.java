@@ -45,7 +45,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 //配置form表单方式登陆点
-                .formLogin();
+                .formLogin()
+                .and()
+                .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login");
         //如果出现权限不够，或者未登录访问的情况，会跳转到该url
 //                .loginPage("/login");
         //把自定义的过滤器加到SpringSecurity的过滤器之前

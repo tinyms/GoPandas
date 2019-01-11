@@ -1,14 +1,14 @@
 package com.scriptlte.gopandas.extend;
 
-public class PluginMeta {
+public class Item {
     private int priority = 10;
     private Object plugin;
 
-    public PluginMeta(Object plugin) {
+    public Item(Object plugin) {
         this.plugin = plugin;
     }
 
-    public PluginMeta(Object plugin, int priority) {
+    public Item(Object plugin, int priority) {
         this.priority = priority;
         this.plugin = plugin;
     }

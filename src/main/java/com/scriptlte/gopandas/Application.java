@@ -102,14 +102,14 @@ public class Application {
 //		userAdmin.setPassword("123");
 //		userAdmin.setStatus(SecurityConstant.USER_STATUS_ENABLE);
 //		orgUserService.saveOrUpdate(userAdmin);
-//		OrgUser user = orgUserService.getUserByUserName("testuser");
-//		if (user == null){
-//			user = new OrgUser();
-//		}
-//		user.setUsername("testuser");
-//		user.setPassword(Md5PasswordEncoder.getInstance().encode("123"));
-//		user.setStatus(SecurityConstant.USER_STATUS_ENABLE);
-//		orgUserService.saveOrUpdate(user);
+		OrgUser user1 = orgUserService.getUserByUserName("testuser");
+		if (user1 == null){
+			user1 = new OrgUser();
+		}
+		user1.setUsername("testuser");
+		user1.setPassword(Md5PasswordEncoder.getInstance().encode("123"));
+		user1.setStatus(SecurityConstant.USER_STATUS_ENABLE);
+		orgUserService.saveOrUpdate(user1);
 		OrgUser user = orgUserService.getUserByUserName("testuser2");
 		if (user == null){
 			user = new OrgUser();
@@ -139,11 +139,12 @@ public class Application {
         orgGrantRepository.save(orgGrant3);
 
 		//保存用户和角色的对应
-//		orgRel_x_roleRepository.save(new OrgRel_X_Role(user.getId(),role.getId(),SecurityConstant.OBJECT_TYPE_USER));
+//		orgRel_x_roleRepository.save(new OrgRel_X_Role(user1.getId(),role.getId(),SecurityConstant.OBJECT_TYPE_USER));
 		//保存角色和权限的对应
 //		orgRel_x_grantRepository.save(new OrgRel_X_Grant(role.getId(),orgGrant1.getId(),SecurityConstant.OBJECT_TYPE_ROLE));
 //		orgRel_x_grantRepository.save(new OrgRel_X_Grant(role.getId(),orgGrant2.getId(),SecurityConstant.OBJECT_TYPE_ROLE));
 		//保存用户和权限的对应
+//		orgRel_x_grantRepository.save(new OrgRel_X_Grant(user1.getId(),orgGrant3.getId(),SecurityConstant.OBJECT_TYPE_USER));
 //		orgRel_x_grantRepository.save(new OrgRel_X_Grant(user.getId(),orgGrant3.getId(),SecurityConstant.OBJECT_TYPE_USER));
 
 

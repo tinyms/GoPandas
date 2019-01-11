@@ -31,8 +31,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        unEnableSecurity(http);
+    }
+
+    private void EnableSecurity(HttpSecurity http) throws Exception{
         http
-            .authorizeRequests()
+                .authorizeRequests()
                 //这几个路径 不需要权限
                 .antMatchers("/finder*").hasAnyAuthority("testGrant3")
 //                .antMatchers("/finder*").hasAnyRole("TESTROLE")
@@ -40,13 +44,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //其他url需要登陆权限
                 .anyRequest().authenticated()
                 .and()
-            //配置form表单方式登陆点
-            .formLogin();
-                //如果出现权限不够，或者未登录访问的情况，会跳转到该url
+                //配置form表单方式登陆点
+                .formLogin();
+        //如果出现权限不够，或者未登录访问的情况，会跳转到该url
 //                .loginPage("/login");
         //把自定义的过滤器加到SpringSecurity的过滤器之前
 //        http.addFilterBefore(ipAuthenticationProcessingFilter(authenticationManager()), UsernamePasswordAuthenticationFilter.class);
     }
+
+    private void unEnableSecurity(HttpSecurity http) throws Exception{
+        http.authorizeRequests().anyRequest().permitAll();
+    }
+
 
     IpAuthenticationProcessingFilter ipAuthenticationProcessingFilter(AuthenticationManager authenticationManager){
 

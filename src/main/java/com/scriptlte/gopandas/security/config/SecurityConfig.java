@@ -31,7 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        unEnableSecurity(http);
+        EnableSecurity(http);
     }
 
     private void EnableSecurity(HttpSecurity http) throws Exception{
@@ -40,7 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //这几个路径 不需要权限
                 .antMatchers("/finder*").hasAnyAuthority("testGrant3")
 //                .antMatchers("/finder*").hasAnyRole("TESTROLE")
-                .antMatchers("/iplogin","/login").permitAll()
+                .antMatchers("/iplogin","/login","/h2-console*").permitAll()
                 //其他url需要登陆权限
                 .anyRequest().authenticated()
                 .and()

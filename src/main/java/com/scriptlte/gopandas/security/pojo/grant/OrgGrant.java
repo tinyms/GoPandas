@@ -1,5 +1,6 @@
 package com.scriptlte.gopandas.security.pojo.grant;
 
+import com.scriptlte.gopandas.security.config.SecurityConstant;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.GrantedAuthority;
@@ -20,6 +21,8 @@ public class OrgGrant implements GrantedAuthority {
     private String id;
     @Column(unique = true)
     private String grantName;
+    @Column(nullable = false)
+    private String grantType = SecurityConstant.GRANT_TYPE_DEFAULT;
 
     @Override
     public String getAuthority() {
@@ -28,8 +31,8 @@ public class OrgGrant implements GrantedAuthority {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof OrgGrant)) return false;
+        if (this == o) {return true;}
+        if (!(o instanceof OrgGrant)) {return false;}
         OrgGrant orgGrant = (OrgGrant) o;
         return Objects.equals(id, orgGrant.id) &&
                 Objects.equals(grantName, orgGrant.grantName);

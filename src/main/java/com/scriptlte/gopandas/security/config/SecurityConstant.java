@@ -62,4 +62,14 @@ public class SecurityConstant {
     public static final String OBJECT_TYPE_EMPOLYEE = "empolyee_";
 
     /*关联关系定义常量 end-------*/
+
+    /*权限对象常量定义 start-------*/
+
+    /**
+     * 权限所属类型: 默认
+     */
+    public static final String GRANT_TYPE_DEFAULT = "grant_default";
+
+    /*权限对象常量定义 end-------*/
+
 }

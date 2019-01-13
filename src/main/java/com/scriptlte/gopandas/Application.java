@@ -34,6 +34,7 @@ import com.scriptlte.gopandas.security.service.OrgUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
@@ -48,6 +49,7 @@ import java.util.Set;
  */
 
 @SpringBootApplication
+@EnableCaching
 public class Application {
 
 	@Autowired
@@ -140,10 +142,10 @@ public class Application {
 
 		//保存用户和角色的对应
 //		orgRel_x_roleRepository.save(new OrgRel_X_Role(user1.getId(),role.getId(),SecurityConstant.OBJECT_TYPE_USER));
-		//保存角色和权限的对应
+//		保存角色和权限的对应
 //		orgRel_x_grantRepository.save(new OrgRel_X_Grant(role.getId(),orgGrant1.getId(),SecurityConstant.OBJECT_TYPE_ROLE));
 //		orgRel_x_grantRepository.save(new OrgRel_X_Grant(role.getId(),orgGrant2.getId(),SecurityConstant.OBJECT_TYPE_ROLE));
-		//保存用户和权限的对应
+//		保存用户和权限的对应
 //		orgRel_x_grantRepository.save(new OrgRel_X_Grant(user1.getId(),orgGrant3.getId(),SecurityConstant.OBJECT_TYPE_USER));
 //		orgRel_x_grantRepository.save(new OrgRel_X_Grant(user.getId(),orgGrant3.getId(),SecurityConstant.OBJECT_TYPE_USER));
 

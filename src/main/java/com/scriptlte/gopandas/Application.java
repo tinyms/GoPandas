@@ -17,30 +17,24 @@ package com.scriptlte.gopandas;
 
 import com.scriptlte.gopandas.models.EmployeeRepository;
 import com.scriptlte.gopandas.models.ItemRepository;
-import com.scriptlte.gopandas.security.config.SecurityConstant;
-import com.scriptlte.gopandas.security.config.pwencoder.Md5PasswordEncoder;
-import com.scriptlte.gopandas.security.dao.grant.OrgGrantRepository;
-import com.scriptlte.gopandas.security.dao.relation.OrgRel_X_GrantRepository;
-import com.scriptlte.gopandas.security.dao.relation.OrgRel_X_RoleRepository;
-import com.scriptlte.gopandas.security.dao.role.OrgRoleRepository;
-import com.scriptlte.gopandas.security.dao.user.OrgUserRepository;
-import com.scriptlte.gopandas.security.pojo.grant.OrgGrant;
-import com.scriptlte.gopandas.security.pojo.relation.OrgRel_X_Grant;
-import com.scriptlte.gopandas.security.pojo.relation.OrgRel_X_Role;
-import com.scriptlte.gopandas.security.pojo.role.OrgRole;
-import com.scriptlte.gopandas.security.pojo.user.OrgUser;
-import com.scriptlte.gopandas.security.service.OrgRoleService;
-import com.scriptlte.gopandas.security.service.OrgUserService;
+import com.scriptlte.gopandas.modules.security.config.SecurityConstant;
+import com.scriptlte.gopandas.modules.security.config.pwencoder.Md5PasswordEncoder;
+import com.scriptlte.gopandas.modules.security.dao.grant.OrgGrantRepository;
+import com.scriptlte.gopandas.modules.security.dao.relation.OrgRel_X_GrantRepository;
+import com.scriptlte.gopandas.modules.security.dao.relation.OrgRel_X_RoleRepository;
+import com.scriptlte.gopandas.modules.security.dao.role.OrgRoleRepository;
+import com.scriptlte.gopandas.modules.security.dao.user.OrgUserRepository;
+import com.scriptlte.gopandas.modules.security.pojo.grant.OrgGrant;
+import com.scriptlte.gopandas.modules.security.pojo.role.OrgRole;
+import com.scriptlte.gopandas.modules.security.pojo.user.OrgUser;
+import com.scriptlte.gopandas.modules.security.service.OrgRoleService;
+import com.scriptlte.gopandas.modules.security.service.OrgUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 /**
  * This example shows various ways to secure Spring Data REST applications using Spring Security

@@ -20,7 +20,10 @@ spring:
     expose-session-attributes: false
     request-context-attribute: request
     suffix: .ftl
-
 server:
   tomcat:
     uri-encoding: utf-8
+#操作日志记录模块相关配置
+logrecord:
+  #开启操作日志记录
+  open: true

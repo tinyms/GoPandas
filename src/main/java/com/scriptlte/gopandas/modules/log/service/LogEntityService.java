@@ -28,5 +28,4 @@ public class LogEntityService {
     public List<LogEntity> getLogsByModule(String moduleName){
         return logRepository.findAllByOperaModule(moduleName);
     }
-
 }

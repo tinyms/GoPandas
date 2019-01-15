@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.awt.geom.RectangularShape;
 
@@ -20,6 +22,7 @@ public class LogEntityController {
 
     @LogRecord(operaDescription = "查询所有操作日志", operaFunctionName = "操作日志查询", operaModule = LogRecordConstant.LOGRECORD_MODULE_LOG)
     @RequestMapping("{module}")
+    @ResponseBody
     public ResponseMessage getLogsByModule(@PathVariable(name = "module") String module) {
         return ResponseMessage.GetSuccessMessage(logService.getLogsByModule(module));
     }

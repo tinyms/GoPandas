@@ -15,8 +15,6 @@
  */
 package com.scriptlte.gopandas;
 
-import com.scriptlte.gopandas.models.EmployeeRepository;
-import com.scriptlte.gopandas.models.ItemRepository;
 import com.scriptlte.gopandas.modules.security.config.SecurityConstant;
 import com.scriptlte.gopandas.modules.security.config.pwencoder.Md5PasswordEncoder;
 import com.scriptlte.gopandas.modules.security.dao.grant.OrgGrantRepository;
@@ -45,11 +43,6 @@ import javax.annotation.PostConstruct;
 @SpringBootApplication
 @EnableCaching
 public class Application {
-
-	@Autowired
-    ItemRepository itemRepository;
-	@Autowired
-    EmployeeRepository employeeRepository;
 
 	@Autowired
 	OrgUserService orgUserService;

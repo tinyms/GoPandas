@@ -1,11 +1,16 @@
 package com.scriptlte.gopandas.vo;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
-public class ResponseMessage {
+import java.io.Serializable;
+
+/**
+ * @author VATE
+ */
+@Data
+public class ResponseMessage implements Serializable {
 
     /**
      * 数据获取成功
@@ -15,6 +20,7 @@ public class ResponseMessage {
      * 数据获取失败
      */
     public static final String RESPONSE_FAIL    = "-1";
+    private static final long serialVersionUID = -7314374296285822131L;
 
     /**
      * 数据
@@ -51,4 +57,18 @@ public class ResponseMessage {
         return new ResponseMessage(RESPONSE_SUCCESS, msg);
     }
 
+    public ResponseMessage setData(Object data) {
+        this.data = data;
+        return this;
+    }
+
+    public ResponseMessage setStatus(String status) {
+        this.status = status;
+        return this;
+    }
+
+    public ResponseMessage setErrorinfo(Object errorinfo) {
+        this.errorinfo = errorinfo;
+        return this;
+    }
 }

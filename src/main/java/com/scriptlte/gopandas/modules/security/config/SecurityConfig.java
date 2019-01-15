@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 
 import javax.annotation.Resource;
@@ -20,7 +21,8 @@ import javax.annotation.Resource;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Resource(name = "orgUserService")
     UserDetailsService userDetailsService;
-
+    @Resource(name = "wrapResponseAccessDeniedHandle")
+    AccessDeniedHandler accessDeniedHandler;
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 //        auth.authenticationProvider(new IpAuthenticationProvider());
@@ -34,6 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private void EnableSecurity(HttpSecurity http) throws Exception{
         http
+                .exceptionHandling().accessDeniedHandler(accessDeniedHandler).and()
                 .authorizeRequests()
                 //这几个路径 不需要权限
                 .antMatchers("/finder*").hasAnyAuthority("testGrant3")

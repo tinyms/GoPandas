@@ -19,10 +19,12 @@ import javax.annotation.Resource;
 @EnableGlobalMethodSecurity(prePostEnabled = true,securedEnabled = true)
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
     @Resource(name = "orgUserService")
     UserDetailsService userDetailsService;
     @Resource(name = "wrapResponseAccessDeniedHandle")
     AccessDeniedHandler accessDeniedHandler;
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 //        auth.authenticationProvider(new IpAuthenticationProvider());

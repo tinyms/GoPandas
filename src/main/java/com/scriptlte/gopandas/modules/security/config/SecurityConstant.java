@@ -32,11 +32,16 @@ public class SecurityConstant {
     /**
      * 部门类型 ： 公司
      */
-    public static final String DEPT_TYPE_COMPANY = "-1";
+    public static final String DEPT_TYPE_COMPANY = "company";
     /**
      * 部门类型 ： 部门
      */
-    public static final String DEPT_TYPE_DEPARTMENT = "0";
+    public static final String DEPT_TYPE_DEPARTMENT = "department";
+
+    /**
+     * 部门层级: 该值作为部门对象的 'pId' 字段，代表该部门/组织 为 根组织/根部门
+     */
+    public static final String DEPT_HIERARCHY_ROOT = "root";
 
     /*部门对象相关常量 end -------*/
 

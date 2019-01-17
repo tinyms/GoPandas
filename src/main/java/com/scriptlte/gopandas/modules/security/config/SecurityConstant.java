@@ -5,11 +5,35 @@ package com.scriptlte.gopandas.modules.security.config;
  */
 public class SecurityConstant {
 
+    /*公共常量定义 start-------*/
+
+    /**
+     * 对象类型:角色
+     */
+    public static final String OBJECT_TYPE_ROLE = "role_";
+    /**
+     * 对象类型:用户
+     */
+    public static final String OBJECT_TYPE_USER = "user_";
+    /**
+     * 对象类型:部门
+     */
+    public static final String OBJECT_TYPE_DEPT = "dept_";
+    /**
+     * 对象类型:员工
+     */
+    public static final String OBJECT_TYPE_EMPOLYEE = "empolyee_";
+
+    /*公共常量定义 end-------*/
+
+    /*角色对象相关常量 start-------*/
+
     /**
      * 所有角色的名字在内存中最终都要加上这个前缀
      */
     public static final String ROLE_PREFIX = "ROLE_";
 
+    /*角色对象相关常量 end-------*/
 
 
     /*用户对象相关常量 start -------*/
@@ -44,29 +68,6 @@ public class SecurityConstant {
     public static final String DEPT_HIERARCHY_ROOT = "root";
 
     /*部门对象相关常量 end -------*/
-
-
-
-    /*关联关系定义常量 start-------*/
-
-    /**
-     * 关联对象类型:角色
-     */
-    public static final String OBJECT_TYPE_ROLE = "role_";
-    /**
-     * 关联对象类型:用户
-     */
-    public static final String OBJECT_TYPE_USER = "user_";
-    /**
-     * 关联对象类型:部门
-     */
-    public static final String OBJECT_TYPE_DEPT = "dept_";
-    /**
-     * 关联对象类型:员工
-     */
-    public static final String OBJECT_TYPE_EMPOLYEE = "empolyee_";
-
-    /*关联关系定义常量 end-------*/
 
     /*权限对象常量定义 start-------*/
 

@@ -10,8 +10,13 @@ public class OrgEmployeeService {
     @Autowired
     private OrgEmployeeRepository orgEmployeeRepository;
 
-    public OrgEmployee getEmpolyee(String employeeId) {
+    public OrgEmployee getEmpolyeeById(String employeeId) {
         OrgEmployee employee = orgEmployeeRepository.getOne(employeeId);
+        return employee;
+    }
+
+    public OrgEmployee getEmpolyeeByCode(String employeeCode) {
+        OrgEmployee employee = orgEmployeeRepository.findOrgEmployeeByEmployeeCode(employeeCode);
         return employee;
     }
 

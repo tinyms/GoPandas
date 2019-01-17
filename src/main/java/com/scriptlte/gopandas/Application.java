@@ -116,15 +116,15 @@ public class Application {
         orgRoleRepository.save(role);
 		OrgGrant orgGrant1 = orgGrantRepository.findOrgGrantByGrantName("testGrant1");
 		if (orgGrant1 == null) orgGrant1 = new OrgGrant();
-		orgGrant1.setGrantName("testGrant1");
+		orgGrant1.setGrantCode("testGrant1");
 		orgGrantRepository.save(orgGrant1);
 		OrgGrant orgGrant2 = orgGrantRepository.findOrgGrantByGrantName("testGrant2");
 		if (orgGrant2 == null) orgGrant2 = new OrgGrant();
-        orgGrant2.setGrantName("testGrant2");
+        orgGrant2.setGrantCode("testGrant2");
         orgGrantRepository.save(orgGrant2);
 		OrgGrant orgGrant3 = orgGrantRepository.findOrgGrantByGrantName("testGrant3");
 		if (orgGrant3 == null) orgGrant3 = new OrgGrant();
-        orgGrant3.setGrantName("testGrant3");
+        orgGrant3.setGrantCode("testGrant3");
         orgGrantRepository.save(orgGrant3);
 
 		//保存用户和角色的对应
@@ -135,8 +135,6 @@ public class Application {
 //		保存用户和权限的对应
 //		orgRel_x_grantRepository.save(new OrgRel_X_Grant(user1.getId(),orgGrant3.getId(),SecurityConstant.OBJECT_TYPE_USER));
 //		orgRel_x_grantRepository.save(new OrgRel_X_Grant(user.getId(),orgGrant3.getId(),SecurityConstant.OBJECT_TYPE_USER));
-
-
 
 	}
 }

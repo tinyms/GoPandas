@@ -8,6 +8,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service("orgGrantService")
 @CacheConfig(cacheNames = "grantServiceCache")
@@ -15,8 +16,8 @@ public class OrgGrantService {
     @Autowired
     private OrgGrantRepository orgGrantRepository;
 
-    public List<OrgGrant> getGrantsByIds(List<String> grantIds) {
-        return orgGrantRepository.findAllById(grantIds);
+    public List<OrgGrant> getGrantsByCodes(Set<String> grantCodes) {
+        return orgGrantRepository.findOrgGrantsByGrantCodeIn(grantCodes);
     }
 
     public OrgGrant save(OrgGrant grant){

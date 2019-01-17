@@ -15,31 +15,29 @@ import java.util.Objects;
 @Data
 public class OrgGrant implements GrantedAuthority {
     @Id
-    @GeneratedValue(generator = "jpa-uuid-grant")
-    @GenericGenerator(name = "jpa-uuid-grant",strategy = "uuid")
-    @Column(length = 32)
-    private String id;
-    @Column(unique = true)
+    private String grantCode;
+    @Column(nullable = false)
     private String grantName;
     @Column(nullable = false)
     private String grantType = SecurityConstant.GRANT_TYPE_DEFAULT;
 
     @Override
     public String getAuthority() {
-        return grantName;
+        return grantCode;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {return true;}
-        if (!(o instanceof OrgGrant)) {return false;}
+        if (this == o) return true;
+        if (!(o instanceof OrgGrant)) return false;
         OrgGrant orgGrant = (OrgGrant) o;
-        return Objects.equals(id, orgGrant.id) &&
-                Objects.equals(grantName, orgGrant.grantName);
+        return  Objects.equals(grantCode, orgGrant.grantCode) &&
+                Objects.equals(grantName, orgGrant.grantName) &&
+                Objects.equals(grantType, orgGrant.grantType);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, grantName);
+        return Objects.hash(grantCode, grantName, grantType);
     }
 }

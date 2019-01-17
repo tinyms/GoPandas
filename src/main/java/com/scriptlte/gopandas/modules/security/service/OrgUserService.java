@@ -82,10 +82,10 @@ public class OrgUserService implements UserDetailsService {
             return null;
         }
         OrgEmployee employee = null;
-        String empolyeeId = user.getEmployeeId();
+        String empolyeeCode = user.getEmployeeCode();
         //获取用户所关联的员工
-        if (StringUtils.isNotBlank(empolyeeId)){
-            employee = orgEmployeeService.getEmpolyee(empolyeeId);
+        if (StringUtils.isNotBlank(empolyeeCode)){
+            employee = orgEmployeeService.getEmpolyeeByCode(empolyeeCode);
             user.setEmployee(employee);
         }
         return employee;
@@ -101,10 +101,10 @@ public class OrgUserService implements UserDetailsService {
             return null;
         }
         OrgDept dept = null;
-        String deptId = employee.getDeptId();
+        String deptCode = employee.getDeptCode();
         //获取员工所关联的部门
-        if (StringUtils.isNotBlank(deptId)){
-            dept = orgDeptService.getDeptById(deptId);
+        if (StringUtils.isNotBlank(deptCode)){
+            dept = orgDeptService.getDeptByDeptCode(deptCode);
             employee.setOrgDept(dept);
         }
         return dept;
@@ -141,12 +141,15 @@ public class OrgUserService implements UserDetailsService {
         //如果用户未绑定员工则为null
         Set<OrgGrant> orgGrants = new HashSet<>();
         List<String> ids = packageIds(user,employee ,dept , roles, "用户权限分析");
+        //分析所有继承权限
         //如果ids不为空,查询出所有对应的权限对象
         if (!ids.isEmpty()){
-            List<String> grantIds = rel_GrantRepository.queryGrantIdsByRelObjectIds(ids);
-            orgGrants.addAll(orgGrantService.getGrantsByIds(grantIds));
+            Set<String> grantCodes = rel_GrantRepository.queryGrantCodesByRelObjectIds(ids);
+            orgGrants.addAll(orgGrantService.getGrantsByCodes(grantCodes));
             user.setGrants(orgGrants);
         }
+        //分析所有通过授权获得的权限
+        //FIXME 2019/1/17 18:43 By:VATE
         return orgGrants;
     }
 
@@ -164,12 +167,12 @@ public class OrgUserService implements UserDetailsService {
         List<String> ids = new ArrayList<>();
             ids.add(user.getId());
             if (employee != null) {
-                ids.add(employee.getId());
+                ids.add(employee.getEmployeeCode());
             } else {
                 LogUtil.printDebug(String.format("%s(用户名 [%s]): employee对象为null...", type, user.getUsername()), log);
             }
             if (dept != null) {
-                ids.add(dept.getId());
+                ids.add(dept.getDeptCode());
             } else {
                 LogUtil.printDebug(String.format("%s(用户名 [%s]): dept对象为null...", type, user.getUsername()), log);
             }

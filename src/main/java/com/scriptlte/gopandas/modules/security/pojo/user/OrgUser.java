@@ -24,14 +24,20 @@ public class OrgUser implements UserDetails, Serializable {
     @GenericGenerator(name = "jpa-uuid-user",strategy = "uuid")
     @Column(length = 32)
     private String id;
-    private String employeeId;
+    private String employeeCode;
     @Column(unique = true,nullable = false)
     private String username;
     @Column(nullable = false)
     private String password;
     @Column(nullable = false)
     private String status;
+    /**
+     * 是否具备授权资格 即将自身权限赋给他人
+     */
+    @Column(nullable = false)
+    private String authorizeAble;
     private String nickname;
+
     @Transient
     private Set<OrgRole> roles;
     @Transient

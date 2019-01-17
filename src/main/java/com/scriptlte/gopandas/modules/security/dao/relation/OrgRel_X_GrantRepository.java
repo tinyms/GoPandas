@@ -6,9 +6,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Set;
 
 public interface OrgRel_X_GrantRepository extends JpaRepository<OrgRel_X_Grant, String> {
 
-    @Query(value="select grantId from OrgRel_X_Grant xg where xg.relObjectId In (:relObjIds) ")
-    List<String> queryGrantIdsByRelObjectIds(@Param("relObjIds")List<String> relObjIds);
+    @Query(value="select xg.grantCode from OrgRel_X_Grant xg where xg.relObjectId In (:relObjIds) ")
+    Set<String> queryGrantCodesByRelObjectIds(@Param("relObjIds")List<String> relObjIds);
 }

@@ -24,7 +24,7 @@ public class OrgDept {
     @Column(nullable = false)
     private String deptType;
     @Column(nullable = false)
-    private String pId;
+    private String parentCode;
     //下列属性主要用于临时存储该部门对应的 权限点，角色，部门直属雇员，需要从数据库中动态查询，不做持久化处理
     @Transient
     private List<OrgGrant> grants;

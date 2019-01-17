@@ -17,13 +17,13 @@ public class OrgEmployee {
     @GenericGenerator(name = "jpa-uuid-employee",strategy = "uuid")
     @Column(length = 32)
     private String id;
-    @Column(unique = true)
+    @Column(unique = true,nullable = false)
     private String employeeCode;
+    private String deptCode;
     private String name;
     private short age;
     private String phoneNumber;
     private String email;
-    private String deptId;
     @Transient
     private List<OrgGrant> grants;
     @Transient

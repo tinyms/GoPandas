@@ -1,0 +1,20 @@
+#开发环境配置
+debug: true   #控制项目中某些debug信息的输出
+spring:
+  jpa:
+    #执行时输出sql
+    show-sql: true
+    #hibernate建表机制
+    hibernate:
+      ddl-auto: update
+  #数据源配置
+  datasource:
+    data-username: sa
+    data-password: 123
+    url: jdbc:h2:file:~/.h2/gopandas_dev;DB_CLOSE_DELAY=-1
+    driver-class-name: org.h2.Driver
+#  redis:
+#    host: localhost
+#    port: 6379
+h2server:
+  open2Server: true

@@ -40,7 +40,7 @@
     <volume>
         <source>filesystem</source>
         <alias>我的书籍</alias>
-        <path>/Users/bopresslte/Documents/dev.books</path>
+        <path>D://Users/bopresslte/Documents/dev.books</path>
         <locale>zh_CN</locale>
         <constraint>
             <locked>false</locked>
@@ -51,7 +51,7 @@
     <volume>
         <source>filesystem</source>
         <alias>我的下载</alias>
-        <path>/Users/bopresslte/Downloads</path>
+        <path>D://Users/bopresslte/Downloads</path>
         <locale>zh_CN</locale>
         <constraint>
             <locked>true</locked>

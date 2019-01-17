@@ -15,26 +15,22 @@
  */
 package com.scriptlte.gopandas;
 
-import com.scriptlte.gopandas.models.Employee;
-import com.scriptlte.gopandas.models.EmployeeRepository;
-import com.scriptlte.gopandas.models.Item;
-import com.scriptlte.gopandas.models.ItemRepository;
+import com.scriptlte.gopandas.modules.security.config.SecurityConstant;
+import com.scriptlte.gopandas.modules.security.config.pwencoder.Md5PasswordEncoder;
+import com.scriptlte.gopandas.modules.security.dao.grant.OrgGrantRepository;
+import com.scriptlte.gopandas.modules.security.dao.relation.OrgRel_X_GrantRepository;
+import com.scriptlte.gopandas.modules.security.dao.relation.OrgRel_X_RoleRepository;
+import com.scriptlte.gopandas.modules.security.dao.role.OrgRoleRepository;
+import com.scriptlte.gopandas.modules.security.dao.user.OrgUserRepository;
+import com.scriptlte.gopandas.modules.security.pojo.grant.OrgGrant;
+import com.scriptlte.gopandas.modules.security.pojo.role.OrgRole;
+import com.scriptlte.gopandas.modules.security.pojo.user.OrgUser;
+import com.scriptlte.gopandas.modules.security.service.OrgRoleService;
+import com.scriptlte.gopandas.modules.security.service.OrgUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.User.UserBuilder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.cache.annotation.EnableCaching;
 
 import javax.annotation.PostConstruct;
 
@@ -44,14 +40,24 @@ import javax.annotation.PostConstruct;
  * @author Greg Turnquist
  */
 
-@EnableAutoConfiguration
 @SpringBootApplication
+@EnableCaching
 public class Application {
 
 	@Autowired
-    ItemRepository itemRepository;
+	OrgUserService orgUserService;
 	@Autowired
-    EmployeeRepository employeeRepository;
+	OrgRoleService orgRoleService;
+	@Autowired
+	OrgUserRepository orgUserRepository;
+	@Autowired
+	OrgRoleRepository orgRoleRepository;
+	@Autowired
+    OrgGrantRepository orgGrantRepository;
+	@Autowired
+	OrgRel_X_GrantRepository orgRel_x_grantRepository;
+	@Autowired
+	OrgRel_X_RoleRepository orgRel_x_roleRepository;
 
 	public static void main(String[] args) {
 	    SpringApplication.run(Application.class);
@@ -61,73 +67,76 @@ public class Application {
 	 * Pre-load the system with employees and items.
 	 */
 	public @PostConstruct void init() {
-
-		employeeRepository.save(new Employee("Bilbo", "Baggins", "thief"));
-		employeeRepository.save(new Employee("Frodo", "Baggins", "ring bearer"));
-		employeeRepository.save(new Employee("Gandalf", "the Wizard", "servant of the Secret Fire"));
+		addUserRole();
+//		employeeRepository.save(new Employee("Bilbo", "Baggins", "thief"));
+//		employeeRepository.save(new Employee("Frodo", "Baggins", "ring bearer"));
+//		employeeRepository.save(new Employee("Gandalf", "the Wizard", "servant of the Secret Fire"));
 
 		/**
 		 * Due to method-level protections on {@link example.company.ItemRepository}, the security context must be loaded
 		 * with an authentication token containing the necessary privileges.
 		 */
-		SecurityUtils.runAs("system", "system", "ROLE_ADMIN");
+//		SecurityUtils.runAs("system", "system", "ROLE_ADMIN");
 
-		itemRepository.save(new Item("Sting"));
-		itemRepository.save(new Item("the one ring"));
+//		itemRepository.save(new Item("Sting"));
+//		itemRepository.save(new Item("the one ring"));
 
-		SecurityContextHolder.clearContext();
 	}
 
-	/**
-	 * This application is secured at both the URL level for some parts, and the method level for other parts. The URL
-	 * security is shown inside this code, while method-level annotations are enabled at by
-	 * {@link EnableGlobalMethodSecurity}.
-	 *
-	 * @author Greg Turnquist
-	 * @author Oliver Gierke
-	 */
-	@Configuration
-	@EnableGlobalMethodSecurity(prePostEnabled = true)
-	@EnableWebSecurity
-	static class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-
-		/**
-		 * This section defines the user accounts which can be used for authentication as well as the roles each user has.
-		 */
-		@Bean
-		InMemoryUserDetailsManager userDetailsManager() {
-
-			UserBuilder builder = User.withDefaultPasswordEncoder();
-
-			UserDetails greg = builder.username("greg").password("turnquist").roles("USER").build();
-			UserDetails ollie = builder.username("ollie").password("gierke").roles("USER", "ADMIN").build();
-
-			return new InMemoryUserDetailsManager(greg, ollie);
+	public void addUserRole(){
+//		OrgUser userAdmin = orgUserService.getUserByUserName("admin");
+//		if (userAdmin==null)
+//			userAdmin = new OrgUser();
+//		userAdmin.setUsername("admin");
+//		userAdmin.setPassword("123");
+//		userAdmin.setStatus(SecurityConstant.USER_STATUS_ENABLE);
+//		orgUserService.saveOrUpdate(userAdmin);
+		OrgUser user1 = orgUserService.getUserByUserName("testuser");
+		if (user1 == null){
+			user1 = new OrgUser();
 		}
-
-		/**
-		 * This section defines the security policy for the app.
-		 * <p>
-		 * <ul>
-		 * <li>BASIC authentication is supported (enough for this REST-based demo).</li>
-		 * <li>/employees is secured using URL security shown below.</li>
-		 * <li>CSRF headers are disabled since we are only testing the REST interface, not a web one.</li>
-		 * </ul>
-		 * NOTE: GET is not shown which defaults to permitted.
-		 *
-		 * @param http
-		 * @throws Exception
-		 * @see org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter#configure(org.springframework.security.config.annotation.web.builders.HttpSecurity)
-		 */
-		@Override
-		protected void configure(HttpSecurity http) throws Exception {
-
-			http.httpBasic().and().authorizeRequests().//
-                    antMatchers(HttpMethod.GET, "/employees").hasRole("ADMIN").//
-					antMatchers(HttpMethod.POST, "/employees").hasRole("ADMIN").//
-					antMatchers(HttpMethod.PUT, "/employees/**").hasRole("ADMIN").//
-					antMatchers(HttpMethod.PATCH, "/employees/**").hasRole("ADMIN").and().//
-					csrf().disable();
+		user1.setUsername("testuser");
+		user1.setPassword(Md5PasswordEncoder.getInstance().encode("123"));
+		user1.setStatus(SecurityConstant.USER_STATUS_ENABLE);
+		orgUserService.saveOrUpdate(user1);
+		OrgUser user = orgUserService.getUserByUserName("testuser2");
+		if (user == null){
+			user = new OrgUser();
 		}
+		user.setUsername("testuser2");
+		user.setPassword(Md5PasswordEncoder.getInstance().encode("123"));
+		user.setStatus(SecurityConstant.USER_STATUS_ENABLE);
+		orgUserService.saveOrUpdate(user);
+
+		OrgRole role = orgRoleService.getRoleByName("TESTROLE");
+		if (role == null){
+			role = new OrgRole();
+			role.setRoleName("TESTROLE");
+		}
+        orgRoleRepository.save(role);
+		OrgGrant orgGrant1 = orgGrantRepository.findOrgGrantByGrantName("testGrant1");
+		if (orgGrant1 == null) orgGrant1 = new OrgGrant();
+		orgGrant1.setGrantName("testGrant1");
+		orgGrantRepository.save(orgGrant1);
+		OrgGrant orgGrant2 = orgGrantRepository.findOrgGrantByGrantName("testGrant2");
+		if (orgGrant2 == null) orgGrant2 = new OrgGrant();
+        orgGrant2.setGrantName("testGrant2");
+        orgGrantRepository.save(orgGrant2);
+		OrgGrant orgGrant3 = orgGrantRepository.findOrgGrantByGrantName("testGrant3");
+		if (orgGrant3 == null) orgGrant3 = new OrgGrant();
+        orgGrant3.setGrantName("testGrant3");
+        orgGrantRepository.save(orgGrant3);
+
+		//保存用户和角色的对应
+//		orgRel_x_roleRepository.save(new OrgRel_X_Role(user1.getId(),role.getId(),SecurityConstant.OBJECT_TYPE_USER));
+//		保存角色和权限的对应
+//		orgRel_x_grantRepository.save(new OrgRel_X_Grant(role.getId(),orgGrant1.getId(),SecurityConstant.OBJECT_TYPE_ROLE));
+//		orgRel_x_grantRepository.save(new OrgRel_X_Grant(role.getId(),orgGrant2.getId(),SecurityConstant.OBJECT_TYPE_ROLE));
+//		保存用户和权限的对应
+//		orgRel_x_grantRepository.save(new OrgRel_X_Grant(user1.getId(),orgGrant3.getId(),SecurityConstant.OBJECT_TYPE_USER));
+//		orgRel_x_grantRepository.save(new OrgRel_X_Grant(user.getId(),orgGrant3.getId(),SecurityConstant.OBJECT_TYPE_USER));
+
+
+
 	}
 }

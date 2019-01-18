@@ -1,5 +1,7 @@
 package com.scriptlte.gopandas.modules.security.config;
 
+import org.springframework.context.annotation.Configuration;
+
 /**
  * 安全模块常量类
  */
@@ -63,9 +65,9 @@ public class SecurityConstant {
     public static final String DEPT_TYPE_DEPARTMENT = "department";
 
     /**
-     * 部门层级: 该值作为部门对象的 'pId' 字段，代表该部门/组织 为 根组织/根部门
+     * 部门层级: 该值作为部门对象的 'parentCode' 字段，代表该部门/组织 为 根组织/根部门
      */
-    public static final String DEPT_HIERARCHY_ROOT = "root";
+    public static final String DEPT_HIERARCHY_ROOT = "-1";
 
     /*部门对象相关常量 end -------*/
 

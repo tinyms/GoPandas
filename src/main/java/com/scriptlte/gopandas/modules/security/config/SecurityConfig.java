@@ -1,8 +1,13 @@
 package com.scriptlte.gopandas.modules.security.config;
 
 import com.scriptlte.gopandas.modules.security.IpSecurity.IpAuthenticationProcessingFilter;
+import com.scriptlte.gopandas.modules.security.custom_url_access.voter.GoPandaVoter;
 import com.scriptlte.gopandas.modules.security.config.pwencoder.Md5PasswordEncoder;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.access.AccessDecisionManager;
+import org.springframework.security.access.AccessDecisionVoter;
+import org.springframework.security.access.vote.UnanimousBased;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -11,9 +16,12 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.access.expression.WebExpressionVoter;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 
 import javax.annotation.Resource;
+import java.util.Arrays;
+import java.util.List;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true,securedEnabled = true)
@@ -40,10 +48,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .exceptionHandling().accessDeniedHandler(accessDeniedHandler).and()
                 .authorizeRequests()
+                .accessDecisionManager(accessDecisionManager())
                 //这几个路径 不需要权限
-                .antMatchers("/finder*").hasAnyAuthority("testGrant3")
-//                .antMatchers("/finder*").hasAnyRole("TESTROLE")
                 .antMatchers("/iplogin","/login").permitAll()
+                .antMatchers("/finder").hasAnyRole("TESTROLE")
+                .antMatchers("/logs").hasAuthority("测试权限")
                 //其他url需要登陆权限
                 .anyRequest().authenticated()
                 .and()
@@ -73,5 +82,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         ipAuthenticationProcessingFilter.setAuthenticationManager(authenticationManager);
         ipAuthenticationProcessingFilter.setAuthenticationFailureHandler(new SimpleUrlAuthenticationFailureHandler("/iplogin/error"));
         return ipAuthenticationProcessingFilter;
+    }
+
+//    @Bean
+//    public AppFilterInvocationSecurityMetadataSource mySecurityMetadataSource(FilterInvocationSecurityMetadataSource filterInvocationSecurityMetadataSource) {
+//        AppFilterInvocationSecurityMetadataSource securityMetadataSource = new AppFilterInvocationSecurityMetadataSource(filterInvocationSecurityMetadataSource);
+//        return securityMetadataSource;
+//    }
+
+    @Bean
+    public AccessDecisionManager accessDecisionManager() {
+        List<AccessDecisionVoter<? extends Object>> decisionVoters
+                = Arrays.asList(
+                new WebExpressionVoter(),
+                new GoPandaVoter());
+//                new AuthenticatedVoter());
+        return new UnanimousBased(decisionVoters);
     }
 }

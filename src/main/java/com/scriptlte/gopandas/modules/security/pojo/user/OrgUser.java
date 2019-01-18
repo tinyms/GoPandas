@@ -35,7 +35,7 @@ public class OrgUser implements UserDetails, Serializable {
      * 是否具备授权资格 即将自身权限赋给他人
      */
     @Column(nullable = false)
-    private String authorizeAble;
+    private Boolean authorizeAble;
     private String nickname;
 
     @Transient

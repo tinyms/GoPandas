@@ -15,6 +15,7 @@
  */
 package com.scriptlte.gopandas;
 
+import com.scriptlte.gopandas.config.DynamicConfig;
 import com.scriptlte.gopandas.modules.security.config.SecurityConstant;
 import com.scriptlte.gopandas.modules.security.config.pwencoder.Md5PasswordEncoder;
 import com.scriptlte.gopandas.modules.security.dao.grant.OrgGrantRepository;
@@ -23,6 +24,8 @@ import com.scriptlte.gopandas.modules.security.dao.relation.OrgRel_X_RoleReposit
 import com.scriptlte.gopandas.modules.security.dao.role.OrgRoleRepository;
 import com.scriptlte.gopandas.modules.security.dao.user.OrgUserRepository;
 import com.scriptlte.gopandas.modules.security.pojo.grant.OrgGrant;
+import com.scriptlte.gopandas.modules.security.pojo.relation.OrgRel_X_Grant;
+import com.scriptlte.gopandas.modules.security.pojo.relation.OrgRel_X_Role;
 import com.scriptlte.gopandas.modules.security.pojo.role.OrgRole;
 import com.scriptlte.gopandas.modules.security.pojo.user.OrgUser;
 import com.scriptlte.gopandas.modules.security.service.OrgRoleService;
@@ -98,6 +101,7 @@ public class Application {
 		user1.setUsername("testuser");
 		user1.setPassword(Md5PasswordEncoder.getInstance().encode("123"));
 		user1.setStatus(SecurityConstant.USER_STATUS_ENABLE);
+		user1.setAuthorizeAble(DynamicConfig.getDefaultOpenUserAuthority()?true:false);
 		orgUserService.saveOrUpdate(user1);
 		OrgUser user = orgUserService.getUserByUserName("testuser2");
 		if (user == null){
@@ -106,6 +110,7 @@ public class Application {
 		user.setUsername("testuser2");
 		user.setPassword(Md5PasswordEncoder.getInstance().encode("123"));
 		user.setStatus(SecurityConstant.USER_STATUS_ENABLE);
+		user.setAuthorizeAble(DynamicConfig.getDefaultOpenUserAuthority()?true:false);
 		orgUserService.saveOrUpdate(user);
 
 		OrgRole role = orgRoleService.getRoleByName("TESTROLE");
@@ -114,27 +119,34 @@ public class Application {
 			role.setRoleName("TESTROLE");
 		}
         orgRoleRepository.save(role);
-		OrgGrant orgGrant1 = orgGrantRepository.findOrgGrantByGrantName("testGrant1");
+		OrgGrant orgGrant1 = orgGrantRepository.findOrgGrantByGrantCode("testGrant1");
 		if (orgGrant1 == null) orgGrant1 = new OrgGrant();
 		orgGrant1.setGrantCode("testGrant1");
+		orgGrant1.setGrantName("测试权限1");
+		orgGrant1.setGrantType("测试/权限");
+
 		orgGrantRepository.save(orgGrant1);
-		OrgGrant orgGrant2 = orgGrantRepository.findOrgGrantByGrantName("testGrant2");
+		OrgGrant orgGrant2 = orgGrantRepository.findOrgGrantByGrantCode("testGrant2");
 		if (orgGrant2 == null) orgGrant2 = new OrgGrant();
-        orgGrant2.setGrantCode("testGrant2");
+		orgGrant2.setGrantCode("testGrant2");
+		orgGrant2.setGrantName("测试权限2");
+		orgGrant2.setGrantType("测试/权限");
         orgGrantRepository.save(orgGrant2);
-		OrgGrant orgGrant3 = orgGrantRepository.findOrgGrantByGrantName("testGrant3");
+		OrgGrant orgGrant3 = orgGrantRepository.findOrgGrantByGrantCode("testGrant3");
 		if (orgGrant3 == null) orgGrant3 = new OrgGrant();
-        orgGrant3.setGrantCode("testGrant3");
+		orgGrant3.setGrantCode("testGrant3");
+		orgGrant3.setGrantName("测试权限3");
+		orgGrant3.setGrantType("测试/权限");
         orgGrantRepository.save(orgGrant3);
 
 		//保存用户和角色的对应
 //		orgRel_x_roleRepository.save(new OrgRel_X_Role(user1.getId(),role.getId(),SecurityConstant.OBJECT_TYPE_USER));
 //		保存角色和权限的对应
-//		orgRel_x_grantRepository.save(new OrgRel_X_Grant(role.getId(),orgGrant1.getId(),SecurityConstant.OBJECT_TYPE_ROLE));
-//		orgRel_x_grantRepository.save(new OrgRel_X_Grant(role.getId(),orgGrant2.getId(),SecurityConstant.OBJECT_TYPE_ROLE));
+//		orgRel_x_grantRepository.save(new OrgRel_X_Grant(role.getId(),orgGrant1.getGrantCode(),SecurityConstant.OBJECT_TYPE_ROLE));
+//		orgRel_x_grantRepository.save(new OrgRel_X_Grant(role.getId(),orgGrant2.getGrantCode(),SecurityConstant.OBJECT_TYPE_ROLE));
 //		保存用户和权限的对应
-//		orgRel_x_grantRepository.save(new OrgRel_X_Grant(user1.getId(),orgGrant3.getId(),SecurityConstant.OBJECT_TYPE_USER));
-//		orgRel_x_grantRepository.save(new OrgRel_X_Grant(user.getId(),orgGrant3.getId(),SecurityConstant.OBJECT_TYPE_USER));
+//		orgRel_x_grantRepository.save(new OrgRel_X_Grant(user1.getId(),orgGrant3.getGrantCode(),SecurityConstant.OBJECT_TYPE_USER));
+//		orgRel_x_grantRepository.save(new OrgRel_X_Grant(user.getId(),orgGrant3.getGrantCode(),SecurityConstant.OBJECT_TYPE_USER));
 
 	}
 }

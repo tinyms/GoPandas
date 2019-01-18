@@ -1,4 +1,4 @@
-package com.scriptlte.gopandas.modules.security.config.handles;
+package com.scriptlte.gopandas.modules.security.config.accessdenied_handles;
 
 import com.alibaba.fastjson.JSONObject;
 import com.scriptlte.gopandas.vo.ResponseMessage;

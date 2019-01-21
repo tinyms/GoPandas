@@ -7,11 +7,12 @@ import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Data
-public class OrgDept {
+public class OrgDept implements Serializable {
     @Id
     @GeneratedValue(generator = "jpa-uuid-dept")
     @GenericGenerator(name = "jpa-uuid-dept",strategy = "uuid")

@@ -7,17 +7,19 @@ import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Data
-public class OrgEmployee {
+public class OrgEmployee implements Serializable {
+    private static final long serialVersionUID = 7839126919142789501L;
     @Id
     @GeneratedValue(generator = "jpa-uuid-employee")
-    @GenericGenerator(name = "jpa-uuid-employee",strategy = "uuid")
+    @GenericGenerator(name = "jpa-uuid-employee", strategy = "uuid")
     @Column(length = 32)
     private String id;
-    @Column(unique = true,nullable = false)
+    @Column(unique = true, nullable = false)
     private String employeeCode;
     private String deptCode;
     private String name;

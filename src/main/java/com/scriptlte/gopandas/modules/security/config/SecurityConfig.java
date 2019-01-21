@@ -51,6 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .accessDecisionManager(accessDecisionManager())
                 //这几个路径 不需要权限
                 .antMatchers("/iplogin","/login").permitAll()
+                .antMatchers("/logi").permitAll()
                 .antMatchers("/finder").hasAnyRole("TESTROLE")
                 .antMatchers("/logs").hasAuthority("测试权限")
                 //其他url需要登陆权限
@@ -60,8 +61,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .and()
                 .logout()
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/login")
+                    .logoutUrl("/logout")
+                    .logoutSuccessUrl("/login")
                 .and()
                 .csrf().disable();
         //如果出现权限不够，或者未登录访问的情况，会跳转到该url

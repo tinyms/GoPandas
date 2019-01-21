@@ -40,4 +40,19 @@ public class OrgGrant implements GrantedAuthority {
     public int hashCode() {
         return Objects.hash(grantCode, grantName, grantType);
     }
+
+    public OrgGrant setGrantCode(String grantCode) {
+        this.grantCode = grantCode;
+        return this;
+    }
+
+    public OrgGrant setGrantName(String grantName) {
+        this.grantName = grantName;
+        return this;
+    }
+
+    public OrgGrant setGrantType(String grantType) {
+        this.grantType = grantType;
+        return this;
+    }
 }

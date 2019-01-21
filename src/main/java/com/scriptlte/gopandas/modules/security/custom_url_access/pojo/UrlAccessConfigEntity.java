@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.io.Serializable;
 
 /**
  * url访问配置实体类，一个配置实体对应一个权限编码
@@ -14,14 +15,18 @@ import javax.persistence.Id;
  */
 @Entity
 @Data
-public class UrlAccessConfigEntity {
-
+public class UrlAccessConfigEntity implements Serializable {
+    private static final long serialVersionUID = 7314973018307525185L;
     @Id
-    @GeneratedValue(generator = "jpa-uuid-customUrlAccessConfig")
-    @GenericGenerator(name = "jpa-uuid-customUrlAccessConfig",strategy = "uuid")
-    private String id;
-    @Column(nullable = false)
     private String antUrlPattern;
     @Column(nullable = false)
     private String grantCode;
+
+    public UrlAccessConfigEntity(String antUrlPattern, String grantCode) {
+        this.antUrlPattern = antUrlPattern;
+        this.grantCode = grantCode;
+    }
+
+    public UrlAccessConfigEntity() {
+    }
 }

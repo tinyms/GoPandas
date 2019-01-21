@@ -27,7 +27,7 @@
 - 权限类型，权限类型主要用于展示。权限类型的值的规范为:```用户资料管理/基本资料/``` 路径式风格。
 
 #### b.权限点注册
-- [未完成] 系统提供权限注册接口 GrantUtil 将自定义的权限点注册进系统.
+- 系统提供权限注册接口 GrantUtil 将自定义的权限点注册进系统.
 - 注：此处是权限点注册而非具体对某个资源的权限限制配置，资源访问限制请参考：<a href="#访问控制">访问控制</a>
 
 ## <a name="组织机构管理">组织机构管理</a>
@@ -46,9 +46,12 @@
 - 对于方法级别的限制，直接为该方法添加注解(详情参考SpringSecurity官方的定义方式)`@PreAuthorize("hasRole('xxx') and hasAuthrority('xxx')")`即可
 
 ### url访问限制
-- url的限制，可以动态配置url访问所需的权限
+可以动态配置url访问所需的权限
+- url访问配置实体对象注册，调用`UrlAccessService.regesiterUrlAccessConfig()`方法
 - 实现方案参考：[SpringSecurity动态配置URL权限](https://www.cnblogs.com/xiaoqi/p/spring-security-rabc.html)
 - 实现详情：本项目实现了自己的Voter，在经过了默认的`WebExpressionVoter`后添加了我们自定义的GoPandaVoter，会对所有经过的Url进行一次检测
 ，检测该url是否有配置过访问限制，有则会根据配置，以及当前访问用户所具备的所有权限点，来判断当前用户是否具备访问该URL的所有
 权限，如果没有则返回无权访问统一的返回格式数据。
 >代码详情查看custom_url_access包下的内容。
+
+

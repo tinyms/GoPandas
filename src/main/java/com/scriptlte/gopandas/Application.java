@@ -117,6 +117,7 @@ public class Application {
 		if (role == null){
 			role = new OrgRole();
 			role.setRoleName("TESTROLE");
+			role.setCreaterUsername(SecurityConstant.ROLE_CREATER_ADMIN);
 		}
         orgRoleRepository.save(role);
 		OrgGrant orgGrant1 = orgGrantRepository.findOrgGrantByGrantCode("testGrant1");

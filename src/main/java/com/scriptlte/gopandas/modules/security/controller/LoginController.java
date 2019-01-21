@@ -1,5 +1,6 @@
 package com.scriptlte.gopandas.modules.security.controller;
 
+import com.scriptlte.gopandas.modules.log.annotation.LogRecord;
 import com.scriptlte.gopandas.modules.security.service.OrgRoleService;
 import com.scriptlte.gopandas.modules.security.service.OrgUserService;
 import org.springframework.beans.factory.annotation.Autowired;

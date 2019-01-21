@@ -141,15 +141,13 @@ public class OrgUserService implements UserDetailsService {
         //如果用户未绑定员工则为null
         Set<OrgGrant> orgGrants = new HashSet<>();
         List<String> ids = packageIds(user,employee ,dept , roles, "用户权限分析");
-        //分析所有继承权限
+        //分析所有可能获得的权限
         //如果ids不为空,查询出所有对应的权限对象
         if (!ids.isEmpty()){
             Set<String> grantCodes = rel_GrantRepository.queryGrantCodesByRelObjectIds(ids);
             orgGrants.addAll(orgGrantService.getGrantsByCodes(grantCodes));
             user.setGrants(orgGrants);
         }
-        //分析所有通过授权获得的权限
-        //FIXME 2019/1/17 18:43 By:VATE
         return orgGrants;
     }
 

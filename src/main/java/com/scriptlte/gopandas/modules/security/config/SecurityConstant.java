@@ -28,12 +28,18 @@ public class SecurityConstant {
 
     /*公共常量定义 end-------*/
 
+
     /*角色对象相关常量 start-------*/
 
     /**
      * 所有角色的名字在内存中最终都要加上这个前缀
      */
     public static final String ROLE_PREFIX = "ROLE_";
+
+    /**
+     * 角色创建人 : 平台创建
+     */
+    public static final String ROLE_CREATER_ADMIN = "creater_gopanda";
 
     /*角色对象相关常量 end-------*/
 

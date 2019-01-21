@@ -12,10 +12,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.util.AntPathMatcher;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * 自定义的Voter
@@ -38,44 +35,30 @@ public class GoPandaVoter implements AccessDecisionVoter<Object> {
         String url = fi.getRequestUrl();
 
         int result = ACCESS_ABSTAIN;
-        //获取用户对象具备的所有权限
-//        Collection<? extends GrantedAuthority> authorities = extractAuthorities(authentication);
-/*        for (ConfigAttribute attribute : attributes) {
-            if(attribute.getAttribute()==null){
-                continue;
-            }
-            if (this.supports(attribute)) {
-                result = ACCESS_DENIED;
-
-                // Attempt to find a matching granted authority
-                for (GrantedAuthority authority : authorities) {
-                    if (attribute.getAttribute().equals(authority.getAuthority())) {
-                        return ACCESS_GRANTED;
-                    }
-                }
-            }
-        }*/
         //根据url获取所有自定义的url访问配置
-        List<UrlAccessConfigEntity> allAccessConfig = getUrlAccessConfig(url);
+        List<String> needGrantCodes = getUrlAccessConfig(url);
         //根据获取到的访问配置和用户对象分析是否有权限访问
-//        result = analyzerAccessConfig(allAccessConfig,authentication);
+        result = analyzerAccessConfig(needGrantCodes,authentication);
         return result;
     }
 
-    private int analyzerAccessConfig(List<UrlAccessConfigEntity> allAccessConfig, Authentication authentication) {
+    private int analyzerAccessConfig(List<String> needGrantCodes, Authentication authentication) {
         OrgUser user = (OrgUser) authentication.getPrincipal();
-        Collection<OrgRole> roles = user.getRoles();
-        Collection<OrgGrant> grants = user.getGrants();
-        //FIXME 2019/1/18 19:17 By:VATE
-        for (UrlAccessConfigEntity urlAccessConfigEntity : allAccessConfig) {
-            String authoritys = urlAccessConfigEntity.getAuthorityExpress();
-            for (OrgGrant grant : grants) {
-
-            }
-            for (OrgRole role : roles) {
-
-            }
+        Collection<OrgGrant> userGrants = user.getGrants();
+        HashSet<String> userGrantCodes = new HashSet<>();
+        //将用户具备的所有权限取出来转换为set字符串
+        for (OrgGrant grant : userGrants) {
+            userGrantCodes.add(grant.getGrantCode());
         }
+        //如果配置项为空 则返回弃权
+        if (needGrantCodes.isEmpty()){
+            return ACCESS_ABSTAIN;
+       }
+        if (userGrantCodes.containsAll(needGrantCodes)){
+            //必须包括所有所需权限点才通过
+            return ACCESS_GRANTED;
+        }
+        //访问拒绝
         return ACCESS_DENIED;
     }
 
@@ -89,17 +72,22 @@ public class GoPandaVoter implements AccessDecisionVoter<Object> {
         return true;
     }
 
-    public List<UrlAccessConfigEntity> getUrlAccessConfig(String url){
+    /**
+     * 根据当前访问的url匹配数据库中定义的url访问配置，如果查出多条访问配置，则需要同时满足所有权限
+     * @param url 当前访问的url
+     * @return
+     */
+    public List<String> getUrlAccessConfig(String url){
         //从数据库中获取所有的自定义URL访问配置对象
         List<UrlAccessConfigEntity> allAccessConfigs = CustomUrlAccessConfig.getAllAccessConfigs();
         //跟当前路径匹配的url权限设定,如果同一个url对应了多个配置，则将多个配置都取出来，必须满足所有配置才能通过
-        List< UrlAccessConfigEntity > matchAccessConfigs = new ArrayList<>();
+        List<String> needGrantCodes = new ArrayList<>();
 
         for (UrlAccessConfigEntity oneAccessConfig : allAccessConfigs) {
             if(antPathMatcher.match(oneAccessConfig.getAntUrlPattern(), url)){
-                matchAccessConfigs.add(oneAccessConfig);
+                needGrantCodes.add(oneAccessConfig.getGrantCode());
             }
         }
-        return matchAccessConfigs;
+        return needGrantCodes;
     }
 }

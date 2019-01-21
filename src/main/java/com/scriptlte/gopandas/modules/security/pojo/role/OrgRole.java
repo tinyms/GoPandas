@@ -3,10 +3,12 @@ package com.scriptlte.gopandas.modules.security.pojo.role;
 import com.scriptlte.gopandas.modules.security.config.SecurityConstant;
 import com.scriptlte.gopandas.modules.security.pojo.grant.OrgGrant;
 import lombok.Data;
+import lombok.NonNull;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
 
@@ -28,6 +30,8 @@ public class OrgRole implements Serializable, GrantedAuthority {
     private String id;
     @Column(unique = true)
     private String roleName;
+    @Column(nullable = false)
+    private String CreaterUsername;
     @Transient
     private List<OrgGrant> grants;
 

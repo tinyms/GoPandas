@@ -90,13 +90,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        return securityMetadataSource;
 //    }
 
+    /**
+     * 添加自定义的Voter选举器，加入自定义Url拦截机制
+     * @return
+     */
     @Bean
     public AccessDecisionManager accessDecisionManager() {
         List<AccessDecisionVoter<? extends Object>> decisionVoters
                 = Arrays.asList(
                 new WebExpressionVoter(),
                 new GoPandaVoter());
-//                new AuthenticatedVoter());
         return new UnanimousBased(decisionVoters);
     }
 }

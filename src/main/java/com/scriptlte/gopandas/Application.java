@@ -101,7 +101,6 @@ public class Application {
 		user1.setUsername("testuser");
 		user1.setPassword(Md5PasswordEncoder.getInstance().encode("123"));
 		user1.setStatus(SecurityConstant.USER_STATUS_ENABLE);
-		user1.setAuthorizeAble(DynamicConfig.getDefaultOpenUserAuthority()?true:false);
 		orgUserService.saveOrUpdate(user1);
 		OrgUser user = orgUserService.getUserByUserName("testuser2");
 		if (user == null){
@@ -110,7 +109,6 @@ public class Application {
 		user.setUsername("testuser2");
 		user.setPassword(Md5PasswordEncoder.getInstance().encode("123"));
 		user.setStatus(SecurityConstant.USER_STATUS_ENABLE);
-		user.setAuthorizeAble(DynamicConfig.getDefaultOpenUserAuthority()?true:false);
 		orgUserService.saveOrUpdate(user);
 
 		OrgRole role = orgRoleService.getRoleByName("TESTROLE");

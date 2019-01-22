@@ -111,9 +111,9 @@ public class OrgEmployeeController {
         OrgEmployee e = new OrgEmployee(id,employeeCode,deptCode,employeeName,employeeAge,phoneNumber,email);
         OrgEmployee employee = orgEmployeeService.save(e);
         if(employee!=null){
-            return ResponseMessage.GetSuccessMessage(employee);
+            return ResponseMessage.GetSuccessMessage("新增或更新一条员工数据成功!");
         }else {
-            return ResponseMessage.GetErrorMessage("暂无员工数据！");
+            return ResponseMessage.GetErrorMessage("新增或更新一条员工数据失败！");
         }
     }
 }

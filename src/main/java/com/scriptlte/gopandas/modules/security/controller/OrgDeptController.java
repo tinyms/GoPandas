@@ -108,9 +108,9 @@ public class OrgDeptController {
         OrgDept d = new OrgDept(id,deptCode,deptName,deptType,parentCode);
         OrgDept dept = orgDeptService.save(d);
         if(dept!=null){
-            return ResponseMessage.GetSuccessMessage(dept);
+            return ResponseMessage.GetSuccessMessage("新增或更新一条部门数据成功!");
         }else {
-            return ResponseMessage.GetErrorMessage("暂无部门数据！");
+            return ResponseMessage.GetErrorMessage("新增或更新一条部门数据失败！");
         }
     }
 }

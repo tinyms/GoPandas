@@ -113,9 +113,9 @@ public class OrgRoleController {
         OrgRole r = new OrgRole(id,roleName,createrUsername);
         OrgRole role = orgRoleService.save(r);
         if(role!=null){
-            return ResponseMessage.GetSuccessMessage(role);
+            return ResponseMessage.GetSuccessMessage("新增或更新一条部门数据成功!");
         }else {
-            return ResponseMessage.GetErrorMessage("暂无角色数据！");
+            return ResponseMessage.GetErrorMessage("新增或更新一条部门数据失败！");
         }
     }
 }

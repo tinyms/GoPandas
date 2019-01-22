@@ -5,4 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface OrgUserRepository extends JpaRepository<OrgUser,String> {
     OrgUser findOrgUserByUsername(String username);
+    OrgUser findOrgUserByEmployeeCode(String employeeCode);
+
+    OrgUser deleteOrgUserById(String id);
+    OrgUser deleteOrgUserByUsername(String username);
 }

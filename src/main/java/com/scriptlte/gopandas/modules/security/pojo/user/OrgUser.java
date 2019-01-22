@@ -40,6 +40,25 @@ public class OrgUser implements UserDetails, Serializable {
     @Transient
     private OrgEmployee employee;
 
+    public OrgUser() {}
+
+    public OrgUser(String id, String employeeCode, String username, String password, String status, String nickname) {
+        this.id = id;
+        this.employeeCode = employeeCode;
+        this.username = username;
+        this.password = password;
+        this.status = status;
+        this.nickname = nickname;
+    }
+
+    public OrgUser(String employeeCode, String username, String password, String status, String nickname) {
+        this.employeeCode = employeeCode;
+        this.username = username;
+        this.password = password;
+        this.status = status;
+        this.nickname = nickname;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<GrantedAuthority> auths = new HashSet<>();

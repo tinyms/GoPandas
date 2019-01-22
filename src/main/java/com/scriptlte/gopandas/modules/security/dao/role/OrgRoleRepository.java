@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface OrgRoleRepository extends JpaRepository<OrgRole,String> {
     OrgRole findOrgRoleByRoleName(String rolename);
+    OrgRole findOrgRoleById(String id);
 }

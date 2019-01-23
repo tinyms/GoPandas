@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 public interface OrgGrantRepository extends JpaRepository<OrgGrant,String> {
-    OrgGrant findOrgGrantByGrantName(String grantName);
+    List<OrgGrant> findOrgGrantByGrantName(String grantName);
     List<OrgGrant> findOrgGrantsByGrantCodeIn(Set<String> grantCodes);
     OrgGrant findOrgGrantByGrantCode(String grantCode);
 }

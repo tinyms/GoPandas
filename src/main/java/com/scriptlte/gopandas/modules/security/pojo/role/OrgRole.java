@@ -44,5 +44,12 @@ public class OrgRole implements Serializable, GrantedAuthority {
         return roleName;
     }
 
+    public OrgRole() {
+    }
 
+    public OrgRole(String id,String roleName, String createrUsername) {
+        this.id = id;
+        this.roleName = roleName;
+        this.CreaterUsername = createrUsername;
+    }
 }

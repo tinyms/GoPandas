@@ -33,4 +33,14 @@ public class OrgDept implements Serializable {
     private List<OrgRole> roles;
     @Transient
     private List<OrgEmployee> eployees;
+
+    public OrgDept() {}
+
+    public OrgDept(String id,String deptCode, String deptName, String deptType, String parentCode) {
+        this.id = id;
+        this.deptCode = deptCode;
+        this.deptName = deptName;
+        this.deptType = deptType;
+        this.parentCode = parentCode;
+    }
 }

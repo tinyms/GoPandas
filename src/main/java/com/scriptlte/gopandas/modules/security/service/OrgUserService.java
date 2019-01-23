@@ -44,6 +44,34 @@ public class OrgUserService implements UserDetailsService {
     @Autowired
     private OrgGrantService orgGrantService;
 
+    public List<OrgUser> getAllUsers() {
+        return orgUserRepository.findAll();
+    }
+
+    public OrgUser getUserById(String id) {
+        return orgUserRepository.getOne(id);
+    }
+
+    public OrgUser getUserByUserName(String username) {
+        return orgUserRepository.findOrgUserByUsername(username);
+    }
+
+    public OrgUser getUserByEmployeeCode(String employeeCode) {
+        return orgUserRepository.findOrgUserByEmployeeCode(employeeCode);
+    }
+
+    public OrgUser saveOrUpdate(OrgUser user) {
+        return orgUserRepository.save(user);
+    }
+
+    public OrgUser deleteOrgUserById(String id){
+        return orgUserRepository.deleteOrgUserById(id);
+    }
+
+    public OrgUser deleteOrgUserByUsername(String userName){
+        return orgUserRepository.deleteOrgUserByUsername(userName);
+    }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         OrgUser user = orgUserRepository.findOrgUserByUsername(username);
@@ -62,16 +90,6 @@ public class OrgUserService implements UserDetailsService {
         return user;
     }
 
-    public OrgUser saveOrUpdate(OrgUser user) {
-        return orgUserRepository.save(user);
-    }
-
-    public OrgUser getUserByUserName(String username) {
-        OrgUser user = orgUserRepository.findOrgUserByUsername(username);
-        return user;
-    }
-
-
     /**
      * 分析该用户对应的雇员对象
      * @param user 登录用户
@@ -85,7 +103,7 @@ public class OrgUserService implements UserDetailsService {
         String empolyeeCode = user.getEmployeeCode();
         //获取用户所关联的员工
         if (StringUtils.isNotBlank(empolyeeCode)){
-            employee = orgEmployeeService.getEmpolyeeByCode(empolyeeCode);
+            employee = orgEmployeeService.getEmployeByCode(empolyeeCode);
             user.setEmployee(employee);
         }
         return employee;
@@ -124,7 +142,7 @@ public class OrgUserService implements UserDetailsService {
         //根据ids去 角色关联表中查询所有的角色对象
         if (!ids.isEmpty()) {
             //获得所有的role的Id
-            List<String> roleIds = rel_RoleRepository.queryRoleIdsByRelObjectIds(ids);
+            Set<String> roleIds = rel_RoleRepository.queryRoleIdsByRelObjectIds(ids);
             orgRoles.addAll(orgRoleService.getRolesByIds(roleIds));
         }
         user.setRoles(orgRoles);

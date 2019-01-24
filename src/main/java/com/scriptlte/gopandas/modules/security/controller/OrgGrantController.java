@@ -23,7 +23,7 @@ public class OrgGrantController {
     private OrgGrantService orgGrantService;
 
     @ApiOperation(value = "获取所有权限")
-    @RequestMapping(value ="/allgrants",method = {RequestMethod.POST,RequestMethod.GET})
+    @RequestMapping(value ="/grant/all",method = {RequestMethod.POST,RequestMethod.GET})
     public ResponseMessage getAllGrants(){
         List<OrgGrant> grantList = orgGrantService.getAllGrants();
         if(grantList.size()>0){
@@ -37,7 +37,7 @@ public class OrgGrantController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "grantCode", value = "权限code", paramType = "query", required = true)
     })
-    @RequestMapping(value ="/grantbygrantcode",method = {RequestMethod.POST,RequestMethod.GET})
+    @RequestMapping(value ="/grant/by_grantcode",method = {RequestMethod.POST,RequestMethod.GET})
     public ResponseMessage getGrantByGrantCode(@RequestParam String grantCode){
         if(StringUtils.isBlank(grantCode)){
             return ResponseMessage.GetErrorMessage("权限code不能为空！");
@@ -54,7 +54,7 @@ public class OrgGrantController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "grantCodes", value = "权限codes", paramType = "query", required = true)
     })
-    @RequestMapping(value ="/grantsbygrantcodes",method = {RequestMethod.POST,RequestMethod.GET})
+    @RequestMapping(value ="/grant/by_grantcodes",method = {RequestMethod.POST,RequestMethod.GET})
     public ResponseMessage getGrantsByGrantCodes(@RequestParam @RequestBody String grantCodes){
         if(StringUtils.isBlank(grantCodes)){
             return ResponseMessage.GetErrorMessage("权限code不能为空！");
@@ -76,7 +76,7 @@ public class OrgGrantController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "grantName", value = "权限名称", paramType = "query", required = true)
     })
-    @RequestMapping(value ="/grantbygrantname",method = {RequestMethod.POST,RequestMethod.GET})
+    @RequestMapping(value ="/grant/by_grantname",method = {RequestMethod.POST,RequestMethod.GET})
     public ResponseMessage getGrantByGrantName(@RequestParam String grantName){
         if(StringUtils.isBlank(grantName)){
             return ResponseMessage.GetErrorMessage("权限名称不能为空！");

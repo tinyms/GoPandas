@@ -28,7 +28,7 @@ public class OrgUserController {
     private OrgEmployeeService orgEmployeeService;
 
     @ApiOperation(value = "获取所有用户信息")
-    @RequestMapping(value ="/allusers",method = {RequestMethod.POST,RequestMethod.GET})
+    @RequestMapping(value ="/user/all",method = {RequestMethod.POST,RequestMethod.GET})
     public ResponseMessage getAllUsers(){
         List<OrgUser> userList = orgUserService.getAllUsers();
         if(userList.size()>0){
@@ -42,7 +42,7 @@ public class OrgUserController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "用户id", paramType = "query", required = true)
     })
-    @RequestMapping(value ="/userbyid",method = {RequestMethod.POST,RequestMethod.GET})
+    @RequestMapping(value ="/user/by_id",method = {RequestMethod.POST,RequestMethod.GET})
     public ResponseMessage getUserById(@RequestParam String id){
         if(StringUtils.isBlank(id)){
             return ResponseMessage.GetErrorMessage("用户id不能为空！");
@@ -59,7 +59,7 @@ public class OrgUserController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userName", value = "用户名", paramType = "query", required = true)
     })
-    @RequestMapping(value ="/userbyusername",method = {RequestMethod.POST,RequestMethod.GET})
+    @RequestMapping(value ="/user/by_username",method = {RequestMethod.POST,RequestMethod.GET})
     public ResponseMessage getUserByUserName(@RequestParam String userName){
         if(StringUtils.isBlank(userName)){
             return ResponseMessage.GetErrorMessage("用户名不能为空！");
@@ -76,7 +76,7 @@ public class OrgUserController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "employeeCode", value = "员工code", paramType = "query", required = true)
     })
-    @RequestMapping(value ="/userbyemployeecode",method = {RequestMethod.POST,RequestMethod.GET})
+    @RequestMapping(value ="/user/by_employeecode",method = {RequestMethod.POST,RequestMethod.GET})
     public ResponseMessage getUserByEmployeeCode(@RequestParam String employeeCode){
         if(StringUtils.isBlank(employeeCode)){
             return ResponseMessage.GetErrorMessage("员工code不能为空！");
@@ -98,7 +98,7 @@ public class OrgUserController {
             @ApiImplicitParam(name = "nickname", value = "昵称", paramType = "query", required = true)
 
     })
-    @RequestMapping(value ="/saveuser",method = {RequestMethod.POST,RequestMethod.GET})
+    @RequestMapping(value ="/user/save",method = {RequestMethod.POST,RequestMethod.GET})
     public ResponseMessage save(@RequestParam String employeeCode,@RequestParam String username,@RequestParam String password,@RequestParam String status,@RequestParam(required = false,defaultValue = "") String nickname){
         if(StringUtils.isBlank(username)){
             return ResponseMessage.GetErrorMessage("用户名不能为空!");
@@ -125,7 +125,7 @@ public class OrgUserController {
             @ApiImplicitParam(name = "nickname", value = "昵称", paramType = "query", required = true)
 
     })
-    @RequestMapping(value ="/updateuser1",method = {RequestMethod.POST,RequestMethod.GET})
+    @RequestMapping(value ="/user/update_unchgpwd",method = {RequestMethod.POST,RequestMethod.GET})
     public ResponseMessage update1(@RequestParam String id,@RequestParam String employeeCode,@RequestParam String username,@RequestParam String password,@RequestParam String status,@RequestParam String nickname){
         if(StringUtils.isBlank(id)){
             return ResponseMessage.GetErrorMessage("id不能为空！");
@@ -153,7 +153,7 @@ public class OrgUserController {
             @ApiImplicitParam(name = "nickname", value = "昵称", paramType = "query", required = true)
 
     })
-    @RequestMapping(value ="/updateuser2",method = {RequestMethod.POST,RequestMethod.GET})
+    @RequestMapping(value ="/user/update_chgpwd",method = {RequestMethod.POST,RequestMethod.GET})
     public ResponseMessage update2(@RequestParam String id,@RequestParam String employeeCode,@RequestParam String username,@RequestParam String password,@RequestParam String status,@RequestParam String nickname){
         if(StringUtils.isBlank(id)){
             return ResponseMessage.GetErrorMessage("id不能为空！");
@@ -177,7 +177,7 @@ public class OrgUserController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "用户id", paramType = "query", required = true)
     })
-    @RequestMapping(value ="/moveuserbyid",method = {RequestMethod.POST,RequestMethod.GET})
+    @RequestMapping(value ="/user/delete/by_id",method = {RequestMethod.POST,RequestMethod.GET})
     public ResponseMessage deleteUserById(@RequestParam String id){
         if(StringUtils.isBlank(id)){
             return ResponseMessage.GetErrorMessage("用户id不能为空！");
@@ -194,7 +194,7 @@ public class OrgUserController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userName", value = "用户名", paramType = "query", required = true)
     })
-    @RequestMapping(value ="/moveuserbyusername",method = {RequestMethod.POST,RequestMethod.GET})
+    @RequestMapping(value ="/user/delete/by_username",method = {RequestMethod.POST,RequestMethod.GET})
     public ResponseMessage deleteUserByUserName(@RequestParam String userName){
         if(StringUtils.isBlank(userName)){
             return ResponseMessage.GetErrorMessage("用户名不能为空！");

@@ -24,7 +24,7 @@ public class OrgEmployeeController {
     private OrgEmployeeService orgEmployeeService;
 
     @ApiOperation(value = "获取所有员工")
-    @RequestMapping(value ="/allemployees",method = {RequestMethod.POST,RequestMethod.GET})
+    @RequestMapping(value ="/employee/all",method = {RequestMethod.POST,RequestMethod.GET})
     public ResponseMessage getAllEmployees(){
         List<OrgEmployee> employeeList = orgEmployeeService.getAllEmployees();
         if(employeeList.size()>0){
@@ -38,7 +38,7 @@ public class OrgEmployeeController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "员工id", paramType = "query", required = true)
     })
-    @RequestMapping(value ="/employeebyid",method = {RequestMethod.POST,RequestMethod.GET})
+    @RequestMapping(value ="/employee/by_id",method = {RequestMethod.POST,RequestMethod.GET})
     public ResponseMessage getEmployeeById(@RequestParam String id){
         if(StringUtils.isBlank(id)){
             return ResponseMessage.GetErrorMessage("员工id不能为空！");
@@ -55,7 +55,7 @@ public class OrgEmployeeController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "employeeCode", value = "员工code", paramType = "query", required = true)
     })
-    @RequestMapping(value ="/employeebyemployeecode",method = {RequestMethod.POST,RequestMethod.GET})
+    @RequestMapping(value ="/employee/by_employeecode",method = {RequestMethod.POST,RequestMethod.GET})
     public ResponseMessage getEmployeebyEmployeeCode(@RequestParam String employeeCode){
         if(StringUtils.isBlank(employeeCode)){
             return ResponseMessage.GetErrorMessage("员工code不能为空！");
@@ -72,7 +72,7 @@ public class OrgEmployeeController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "employeeName", value = "员工名称", paramType = "query", required = true)
     })
-    @RequestMapping(value ="/employeebyemployeename",method = {RequestMethod.POST,RequestMethod.GET})
+    @RequestMapping(value ="/employee/by_employeename",method = {RequestMethod.POST,RequestMethod.GET})
     public ResponseMessage getEmployeebyEmployeeName(@RequestParam String employeeName){
         if(StringUtils.isBlank(employeeName)){
             return ResponseMessage.GetErrorMessage("员工名称不能为空！");
@@ -95,7 +95,7 @@ public class OrgEmployeeController {
             @ApiImplicitParam(name = "phoneNumber", value = "电话号码", paramType = "query", required = true),
             @ApiImplicitParam(name = "email", value = "电子邮件", paramType = "query", required = true)
     })
-    @RequestMapping(value ="/saveorupdateemployee",method = {RequestMethod.POST,RequestMethod.GET})
+    @RequestMapping(value ="/employee/saveorupdate",method = {RequestMethod.POST,RequestMethod.GET})
     public ResponseMessage saveOrUpdate(@RequestParam String id,@RequestParam String employeeCode,@RequestParam String deptCode,@RequestParam(required = false,defaultValue = "") String employeeName,@RequestParam(required = false,defaultValue = "0") String age,@RequestParam(required = false,defaultValue = "") String phoneNumber,@RequestParam(required = false,defaultValue = "") String email){
         //新增一条员工数据时，判断员工code是否已存在
         if(StringUtils.isBlank(id)){

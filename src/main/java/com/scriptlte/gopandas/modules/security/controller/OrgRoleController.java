@@ -26,7 +26,7 @@ public class OrgRoleController {
     private OrgRoleService orgRoleService;
 
     @ApiOperation(value = "获取所有角色")
-    @RequestMapping(value ="/allroles",method = {RequestMethod.POST,RequestMethod.GET})
+    @RequestMapping(value ="/role/all",method = {RequestMethod.POST,RequestMethod.GET})
     public ResponseMessage getAllRoles(){
         List<OrgRole> roleList = orgRoleService.getAllRoles();
         if(roleList.size()>0){
@@ -40,7 +40,7 @@ public class OrgRoleController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "角色id", paramType = "query", required = true)
     })
-    @RequestMapping(value ="/rolebyid",method = {RequestMethod.POST,RequestMethod.GET})
+    @RequestMapping(value ="/role/by_id",method = {RequestMethod.POST,RequestMethod.GET})
     public ResponseMessage getRoleById(@RequestParam String id){
         if(StringUtils.isBlank(id)){
             return ResponseMessage.GetErrorMessage("角色id不能为空！");
@@ -57,7 +57,7 @@ public class OrgRoleController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "roleIds", value = "角色id", paramType = "query", required = true)
     })
-    @RequestMapping(value ="/rolesbyids",method = {RequestMethod.POST,RequestMethod.GET})
+    @RequestMapping(value ="/role/by_ids",method = {RequestMethod.POST,RequestMethod.GET})
     public ResponseMessage getRolesByIds(@RequestParam String roleIds){
         if(StringUtils.isBlank(roleIds)){
             return ResponseMessage.GetErrorMessage("角色id不能为空！");
@@ -79,7 +79,7 @@ public class OrgRoleController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "roleName", value = "角色名称", paramType = "query", required = true)
     })
-    @RequestMapping(value ="/rolebyrolename",method = {RequestMethod.POST,RequestMethod.GET})
+    @RequestMapping(value ="/role/by_rolename",method = {RequestMethod.POST,RequestMethod.GET})
     public ResponseMessage getRoleByRoleName(@RequestParam String roleName){
         if(StringUtils.isBlank(roleName)){
             return ResponseMessage.GetErrorMessage("角色名称不能为空！");
@@ -98,7 +98,7 @@ public class OrgRoleController {
             @ApiImplicitParam(name = "roleName", value = "角色code", paramType = "query", required = true),
             @ApiImplicitParam(name = "createrUsername", value = "角色名称", paramType = "query", required = true)
     })
-    @RequestMapping(value ="/saveorupdatedept",method = {RequestMethod.POST,RequestMethod.GET})
+    @RequestMapping(value ="/role/saveorupdate",method = {RequestMethod.POST,RequestMethod.GET})
     public ResponseMessage saveOrUpdate(@RequestParam String id,@RequestParam String roleName,@RequestParam(required = false,defaultValue = "")String createrUsername){
         //新增一条角色数据时，判断角色code是否已存在
         if(StringUtils.isBlank(id)){

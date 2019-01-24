@@ -45,13 +45,27 @@
 ### 方法访问限制
 - 对于方法级别的限制，直接为该方法添加注解(详情参考SpringSecurity官方的定义方式)`@PreAuthorize("hasRole('xxx') and hasAuthrority('xxx')")`即可
 
-### url访问限制
-可以动态配置url访问所需的权限
-- url访问配置实体对象注册，调用`UrlAccessService.regesiterUrlAccessConfig()`方法
+### URL访问限制
+
+#### a.URL访问限制配置方法
+
+	1. 创建UrlAccessConfigEntity对象
+	   UrlAccessConfigEntity包含两个属性：
+			antUrlPattern：ant格式的url字符串
+			grantCode：权限对象的编码
+			
+	2. url访问配置实体对象注册，调用`UrlAccessService.regesiterUrlAccessConfig(UrlAccessConfigEntity)`方法
+	
+	3. 当某一个url同时匹配了多条配置时，则需要该用户同时具备所有这些配置所需要的权限
+	
+**注意:在注册URL访问配置之前，同时也要保证已经注册该权限编码对应的权限对象。**
+#### b.实现方案
 - 实现方案参考：[SpringSecurity动态配置URL权限](https://www.cnblogs.com/xiaoqi/p/spring-security-rabc.html)
-- 实现详情：本项目实现了自己的Voter，在经过了默认的`WebExpressionVoter`后添加了我们自定义的GoPandaVoter，会对所有经过的Url进行一次检测
-，检测该url是否有配置过访问限制，有则会根据配置，以及当前访问用户所具备的所有权限点，来判断当前用户是否具备访问该URL的所有
-权限，如果没有则返回无权访问统一的返回格式数据。
+- 实现详情：SpringSecurity在进行权限计算时，取决于`AccessDecisionManager`的策略和其中的`List<AccessDecisionVoter>`中每个投票器的结果，  
+	本项目实现了自己的Voter，且采用需要所有投票器全部同意才可通过的UnanimousBased决策管理器，  
+	在默认的`WebExpressionVoter`投票器后添加了我们自定义的`GoPandaVoter`，  
+	`GoPandaVoter`会对所有经过的Url进行一次检测，检测该url是否有配置过访问限制，有则会根据配置，以及当前访问用户所具备的所有权限点，来判断当前用户是否具备访问该URL的所有
+	权限，如果没有则返回无权访问统一的返回格式数据。
 >代码详情查看custom_url_access包下的内容。
 
 

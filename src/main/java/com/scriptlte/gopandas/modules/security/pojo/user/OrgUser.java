@@ -1,5 +1,6 @@
 package com.scriptlte.gopandas.modules.security.pojo.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.scriptlte.gopandas.modules.security.config.SecurityConstant;
 import com.scriptlte.gopandas.modules.security.pojo.employee.OrgEmployee;
 import com.scriptlte.gopandas.modules.security.pojo.grant.OrgGrant;
@@ -21,11 +22,11 @@ public class OrgUser implements UserDetails, Serializable {
 
     @Id
     @GeneratedValue(generator = "jpa-uuid-user")
-    @GenericGenerator(name = "jpa-uuid-user",strategy = "uuid")
+    @GenericGenerator(name = "jpa-uuid-user", strategy = "uuid")
     @Column(length = 32)
     private String id;
     private String employeeCode;
-    @Column(unique = true,nullable = false)
+    @Column(unique = true, nullable = false)
     private String username;
     @Column(nullable = false)
     private String password;
@@ -40,7 +41,8 @@ public class OrgUser implements UserDetails, Serializable {
     @Transient
     private OrgEmployee employee;
 
-    public OrgUser() {}
+    public OrgUser() {
+    }
 
     public OrgUser(String id, String employeeCode, String username, String password, String status, String nickname) {
         this.id = id;
@@ -60,30 +62,38 @@ public class OrgUser implements UserDetails, Serializable {
     }
 
     @Override
+    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<GrantedAuthority> auths = new HashSet<>();
-        auths.addAll(roles);
-        auths.addAll(grants);
+        if (roles != null) {
+            auths.addAll(roles);
+        }
+        if (grants != null) {
+            auths.addAll(grants);
+        }
         return auths;
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonExpired() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonLocked() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return SecurityConstant.USER_STATUS_ENABLE.equals(status)?true:false;
+        return SecurityConstant.USER_STATUS_ENABLE.equals(status) ? true : false;
     }
 }

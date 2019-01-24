@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -78,6 +79,11 @@ public class OrgUserService implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException(String.format("用户不存在！(用户名:[%s])", username));
         }
+        return analyzeAll(user);
+    }
+
+    public OrgUser analyzeAll(OrgUser user){
+        Assert.notNull(user, "用户权限分析错误，用户对象为Null!");
         /*注意： 以下几个analyze方法的顺序不可以改变！*/
         //分析用户关联的员工
         OrgEmployee employee = analyzeEmployee(user);
@@ -89,7 +95,6 @@ public class OrgUserService implements UserDetailsService {
         analyzeGrants(user, employee, dept, roles);
         return user;
     }
-
     /**
      * 分析该用户对应的雇员对象
      * @param user 登录用户

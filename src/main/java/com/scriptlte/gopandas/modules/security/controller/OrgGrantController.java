@@ -3,6 +3,7 @@ package com.scriptlte.gopandas.modules.security.controller;
 import com.scriptlte.gopandas.modules.security.pojo.grant.OrgGrant;
 import com.scriptlte.gopandas.modules.security.service.OrgGrantService;
 import com.scriptlte.gopandas.vo.ResponseMessage;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -18,6 +19,7 @@ import java.util.Set;
 @Controller
 @ResponseBody
 @RequestMapping("/gp")
+@Api(tags = "权限点API")
 public class OrgGrantController {
     @Autowired
     private OrgGrantService orgGrantService;

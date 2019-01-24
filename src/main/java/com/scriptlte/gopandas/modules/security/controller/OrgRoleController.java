@@ -3,6 +3,7 @@ package com.scriptlte.gopandas.modules.security.controller;
 import com.scriptlte.gopandas.modules.security.pojo.role.OrgRole;
 import com.scriptlte.gopandas.modules.security.service.OrgRoleService;
 import com.scriptlte.gopandas.vo.ResponseMessage;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -21,6 +22,7 @@ import java.util.Set;
 @Controller
 @ResponseBody
 @RequestMapping("/gp")
+@Api(tags = "角色信息API")
 public class OrgRoleController {
     @Autowired
     private OrgRoleService orgRoleService;

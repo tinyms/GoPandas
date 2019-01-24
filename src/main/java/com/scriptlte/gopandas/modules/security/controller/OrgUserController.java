@@ -5,6 +5,7 @@ import com.scriptlte.gopandas.modules.security.pojo.user.OrgUser;
 import com.scriptlte.gopandas.modules.security.service.OrgEmployeeService;
 import com.scriptlte.gopandas.modules.security.service.OrgUserService;
 import com.scriptlte.gopandas.vo.ResponseMessage;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -21,6 +22,7 @@ import java.util.List;
 @Controller
 @ResponseBody
 @RequestMapping("/gp")
+@Api(tags = "用户信息API")
 public class OrgUserController {
     @Autowired
     private OrgUserService orgUserService;

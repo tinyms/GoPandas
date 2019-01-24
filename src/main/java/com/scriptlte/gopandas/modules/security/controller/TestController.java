@@ -13,14 +13,19 @@ import com.scriptlte.gopandas.modules.security.service.OrgRoleService;
 import com.scriptlte.gopandas.modules.security.service.OrgUserService;
 import com.scriptlte.gopandas.utils.UrlAccessConfigUtil;
 import com.scriptlte.gopandas.vo.ResponseMessage;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
+@Api(tags = "测试用API")
+@RequestMapping(method = {RequestMethod.GET,RequestMethod.POST})
 public class TestController {
     @Autowired
     OrgUserService orgUserService;

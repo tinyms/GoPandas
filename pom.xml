@@ -252,7 +252,13 @@
             <version>1.2.37</version>
         </dependency>
 
-
+        <!--mysql-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.21</version>
+        </dependency>
+        <!--mysql-->
 
     </dependencies>
 
